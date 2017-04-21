@@ -11,4 +11,4 @@ class Dane(models.Model):
     obrot = models.FloatField()
 
     def __str__(self):
-        return self.nazwa + " " + self.data
+        return str(self.nazwa) + " " + str(self.data.strftime('%d/%m/%y'))
