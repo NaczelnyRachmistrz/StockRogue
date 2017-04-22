@@ -9,6 +9,8 @@ class Dane(models.Model):
     kurs_min = models.FloatField()
     kurs_biezacy = models.FloatField()
     obrot = models.FloatField()
+    class Meta:
+        unique_together = ('nazwa', 'data')
 
     def __str__(self):
         return str(self.nazwa) + " " + str(self.data.strftime('%d/%m/%y'))
