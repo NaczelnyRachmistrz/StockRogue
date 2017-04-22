@@ -5,10 +5,10 @@ from stock_rogue_app.strategies import strategyC
 from stock_rogue_app.strategies import strategyD
 from stock_rogue_app.strategies.futureDataGenerator import generate_future_data
 
-##TODO : Zakładam, że company_data zawiera tylko spółkę company_name + company_data jest posortowane malejąco po datach
-#        Tzn. od najwcześniejszej do najpoźniejszej. Wynikiem jest tablica rozmiaru predict_interval + 1, gdzie
-#        w ostatnim polu jest przewidywany średni kurs przyszły (tzn. wycena ile de facto jest spółka warta).
-#        Wyliczane wartości przyszłe to: kurs_bieżący, kurs_min, kurs_max
+##TODO : Zakladam, ze company_data zawiera tylko spolke company_name + company_data jest posortowane malejaco po datach
+#        Tzn. od najwczesniejszej do najpozniejszej. Wynikiem jest tablica rozmiaru predict_interval + 1, gdzie
+#        w ostatnim polu jest przewidywany sredni kurs przyszly (tzn. wycena ile de facto jest spolka warta).
+#        Wyliczane wartosci przyszle to: kurs_biezacy, kurs_min, kurs_max
 ##
 def estimate_values(company_name, predict_interval, strategy, company_data):
     # We assume first there is only one strategy

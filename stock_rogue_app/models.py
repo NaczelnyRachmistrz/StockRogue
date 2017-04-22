@@ -1,5 +1,7 @@
 from __future__ import unicode_literals
+
 from django.db import models
+
 
 class Dane(models.Model):
     nazwa = models.CharField(max_length=50)
@@ -9,6 +11,7 @@ class Dane(models.Model):
     kurs_min = models.FloatField()
     kurs_biezacy = models.FloatField()
     obrot = models.FloatField()
+
     class Meta:
         unique_together = ('nazwa', 'data')
 

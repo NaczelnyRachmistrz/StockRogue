@@ -15,7 +15,7 @@ def predict_future_average_name_value(strategy_data, company_data, name):
         gamma_factor = (1 - strategy_data['gamma']) / (1 - gamma_max)
 
     for _, day in zip(range(strategy_data['number_of_past_days']), company_data):
-        result += day[name] * (strategy_data['alpha'] * (day['obrót'] / strategy_data['sum_volume']) +
+        result += day[name] * (strategy_data['alpha'] * (day['obrot'] / strategy_data['sum_volume']) +
                                gamma_acc * gamma_factor)
         gamma_acc *= strategy_data['gamma']
 
@@ -28,7 +28,7 @@ def sum_volume(company_name, number_of_past_days, company_data):
     for idx, day in enumerate(company_data):
         if idx >= number_of_past_days:
             break
-        result += day['obrót']
+        result += day['obrot']
     return result
     pass
 
@@ -52,9 +52,9 @@ def predict_future_average_values(company_name, number_of_past_days, company_dat
     result[len(result) - 1]['kurs_min'] = predict_future_average_name_value(strategy_data,
                                                                              company_data,
                                                                              'kurs_min')
-    result[len(result) - 1]['kurs_bieżący'] = predict_future_average_name_value(strategy_data,
+    result[len(result) - 1]['kurs_biezacy'] = predict_future_average_name_value(strategy_data,
                                                                                company_data,
-                                                                               'kurs_bieżący')
+                                                                               'kurs_biezacy')
 
     return result
     pass
@@ -64,9 +64,9 @@ def predict_future_values(company_name, number_of_past_days, company_data, resul
     company_data_trends = [{}] * (number_of_past_days - 1)
     for idx, day in zip(range(number_of_past_days - 1), company_data):
         company_data_trends[idx]['data'] = day['data']
-        company_data_trends[idx]['obrót'] = day['obrót']
-        company_data_trends[idx]['kurs_bieżący'] = (company_data[idx]['kurs_bieżący'] - company_data[idx + 1]['kurs_bieżący']) / \
-                                                company_data[idx]['kurs_bieżący']
+        company_data_trends[idx]['obrot'] = day['obrot']
+        company_data_trends[idx]['kurs_biezacy'] = (company_data[idx]['kurs_biezacy'] - company_data[idx + 1]['kurs_biezacy']) / \
+                                                company_data[idx]['kurs_biezacy']
         company_data_trends[idx]['kurs_max'] = (company_data[idx]['kurs_max'] - company_data[idx + 1]['kurs_max']) / \
                                             company_data[idx]['kurs_max']
         company_data_trends[idx]['kurs_min'] = (company_data[idx]['kurs_min'] - company_data[idx + 1]['kurs_min']) / \
@@ -92,12 +92,12 @@ def predict_future_values(company_name, number_of_past_days, company_data, resul
             day['kurs_max'] = (
                               predict_future_average_name_value(strategy_data, company_data_trends, 'kurs_max') + 1.0) * \
                               company_data[0]['kurs_max']
-            day['kurs_bieżący'] = (predict_future_average_name_value(strategy_data, company_data_trends,
-                                                                     'kurs_bieżący') + 1.0) * company_data[0]['kurs_bieżący']
+            day['kurs_biezacy'] = (predict_future_average_name_value(strategy_data, company_data_trends,
+                                                                     'kurs_biezacy') + 1.0) * company_data[0]['kurs_biezacy']
             continue
         day['kurs_min'] = (predict_future_average_name_value(strategy_data, company_data_trends, 'kurs_min') + 1.0) * result[idx - 1]['kurs_min']
         day['kurs_max'] = (predict_future_average_name_value(strategy_data, company_data_trends, 'kurs_max') + 1.0) * result[idx - 1]['kurs_max']
-        day['kurs_bieżący'] = (predict_future_average_name_value(strategy_data, company_data_trends, 'kurs_bieżący') + 1.0) * result[idx - 1]['kurs_bieżący']
+        day['kurs_biezacy'] = (predict_future_average_name_value(strategy_data, company_data_trends, 'kurs_biezacy') + 1.0) * result[idx - 1]['kurs_biezacy']
         strategy_data['gamma'] *= gamma
 
     return result

@@ -20,11 +20,11 @@ def predict_future(company_name, number_of_past_days, company_data, result):
     avg_values = {}
     avg_values['kurs_min'] = strategyA.predict_future_average_name_value(strategy_data, company_data, 'kurs_min')
     avg_values['kurs_max'] = strategyA.predict_future_average_name_value(strategy_data, company_data, 'kurs_max')
-    avg_values['kurs_bieżący'] = strategyA.predict_future_average_name_value(strategy_data, company_data, 'kurs_bieżący')
+    avg_values['kurs_biezacy'] = strategyA.predict_future_average_name_value(strategy_data, company_data, 'kurs_biezacy')
 
     for day in result:
         day['kurs_min'] = avg_values['kurs_min']
         day['kurs_max'] = avg_values['kurs_max']
-        day['kurs_bieżący'] = avg_values['kurs_bieżący']
+        day['kurs_biezacy'] = avg_values['kurs_biezacy']
     return result
     pass

@@ -1,8 +1,9 @@
 # {"nazwa":row[0], "kurs_otwarcia":float(row[2]), "data":parser.parse(row[1]), "kurs_max": float(row[3]),
-#                 "kurs_min": float(row[4]), "kurs_bieżący": float(row[5]), "obrót": float(row[6])}
-from datetime import timedelta, date
+#                 "kurs_min": float(row[4]), "kurs_biezacy": float(row[5]), "obrot": float(row[6])}
+from datetime import timedelta, date, datetime
 
 from stock_rogue_app.estimator import estimate_values
+from stock_rogue_app.models import Dane
 
 
 def daterange(start_date, end_date):
@@ -28,8 +29,8 @@ for i in range(40):
     d['kurs_otwarcia'] = 10.00 + i / 10
     d['kurs_min'] = 9.00 + i / 10
     d['kurs_max'] = 11.00 + i / 10
-    d['kurs_bieżący'] = 10.50 + i / 10
-    d['obrót'] = 1 + i
+    d['kurs_biezacy'] = 10.50 + i / 10
+    d['obrot'] = 1 + i
     d['data'] = dates[i]
     print(d)
     company_data.append(d)
@@ -37,4 +38,5 @@ for i in range(40):
 predicted_data = estimate_values('A', 30, 'D', company_data)
 for day in predicted_data:
     print(day)
+
 # print(predicted_data[len(predicted_data) - 1])
