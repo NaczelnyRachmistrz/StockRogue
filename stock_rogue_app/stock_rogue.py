@@ -4,6 +4,7 @@ import argparse
 import sys
 
 from StockRogue.downloader import update_data
+from stock_rogue_app.data_selector import select_data
 from .estimator import estimate_values
 from .plot_creator import plot_preprocess, create_plot, save_plot
 

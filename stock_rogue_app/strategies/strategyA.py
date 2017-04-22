@@ -41,7 +41,7 @@ def predict_future_average_values(company_name, number_of_past_days, company_dat
     # And put also in strategy_data: company_name and sum of volumes from number_of_days days.
     strategy_data = {}
     strategy_data['number_of_past_days'] = number_of_past_days
-    strategy_data['alpha'] = 0.1
+    strategy_data['alpha'] = 0.3
     strategy_data['beta'] = 1.0 - strategy_data['alpha']
     # gamma from range [0, 1]
     strategy_data['gamma'] = 0.9
@@ -82,7 +82,7 @@ def predict_future_values(company_name, number_of_past_days, company_data, resul
 
     # print("HEJA")
 
-    gamma = 0.95
+    gamma = 0.9
     # TODO : Should be turned into class.
     strategy_data = {}
     strategy_data['number_of_past_days'] = number_of_past_days
@@ -94,6 +94,7 @@ def predict_future_values(company_name, number_of_past_days, company_data, resul
     # TODO this is computed again.
     strategy_data['sum_volume'] = sum_volume(company_name, number_of_past_days, company_data)
 
+    counter_for_anomalies_max = 0
     for idx, day in zip(range(len(result) - 1), result):
         if idx == 0:
             day['kurs_min'] = (
@@ -111,13 +112,16 @@ def predict_future_values(company_name, number_of_past_days, company_data, resul
         if trend_min > trend_max:
             trend_max, trend_min = trend_min, trend_max
         if result[idx - 1]['kurs_min'] * 1.03 < result[idx - 1]['kurs_max']:
+            counter_for_anomalies_max += 1
             trend_max = -trend_max
+        if counter_for_anomalies_max == 3:
+            trend_max = -(trend_max * 1.03)
+        if counter_for_anomalies_max == 6:
+            trend_max *= 1.05
         trend_biezacy = min(1.1 * trend_max, trend_biezacy)
         trend_biezacy = max(1.1 * trend_min, trend_biezacy)
         day['kurs_min'] = (trend_min + 1.0) * result[idx - 1]['kurs_min']
         day['kurs_max'] = (trend_max + 1.0) * result[idx - 1]['kurs_max']
-        # print(predict_future_average_name_value(strategy_data, company_data_trends, 'kurs_biezacy'))
-        # print("HEJO")
         day['kurs_biezacy'] = (trend_biezacy + 1.0) * result[idx - 1]['kurs_biezacy']
         strategy_data['gamma'] *= gamma
 

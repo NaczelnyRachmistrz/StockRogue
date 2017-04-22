@@ -6,14 +6,16 @@ from datetime import datetime
 from django.test import TestCase
 
 # Create your tests here.
+from stock_rogue_app.data_selector import select_data
 from stock_rogue_app.estimator import estimate_values
 from stock_rogue_app.models import Dane
+from stock_rogue_app.plot_creator import plot_preprocess, create_plot
 
-x = {}
-x = Dane.objects.filter(nazwa='MBANK')
-z = x.values()[::-1]
-# z = z.reverse()
+company_name = 'ASSECOPOL'
+company_data = select_data(company_name)
+start_data = company_data[len(company_data) - 1]['data']
+predicted_data = estimate_values(company_name, 10, 'A', company_data)
+predicted_data = predicted_data[0:-1]
 
-y = estimate_values(z[0]['nazwa'], 10, 'A', z)
-# for day in y:
-#     print(day)
+plot_data = plot_preprocess(company_data, predicted_data, start_data)
+create_plot(plot_data, company_name)
