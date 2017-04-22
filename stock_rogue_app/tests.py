@@ -10,6 +10,10 @@ from stock_rogue_app.estimator import estimate_values
 from stock_rogue_app.models import Dane
 
 x = {}
-x = Dane.objects.filter(nazwa='06MAGNA')
+x = Dane.objects.filter(nazwa='MBANK')
+z = x.values()[::-1]
+# z = z.reverse()
 
-y = estimate_values(x[0]['nazwa'], 30, 'C', x)
+y = estimate_values(z[0]['nazwa'], 10, 'A', z)
+# for day in y:
+#     print(day)
