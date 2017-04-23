@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from __future__ import absolute_import  # Python 2 only
 
 from django.contrib.staticfiles.storage import staticfiles_storage

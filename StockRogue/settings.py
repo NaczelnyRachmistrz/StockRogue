@@ -59,7 +59,7 @@ TEMPLATES = [
         ,
         'APP_DIRS': True,
         'OPTIONS': {
-            'environment': 'StockRogue.jinja2.Environment',
+            'environment': 'StockRogue.jinja2.environment',
 
             'context_processors': [
                 'django.template.context_processors.debug',

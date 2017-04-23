@@ -10,12 +10,12 @@ def index(request):
         'spolki': Spolka.objects.all()
     }
 
-    render_to_response("main_site.html", data)
+    return render_to_response("main_site.html", data)
 
-def companyView(request, comp):
+def companyView(request, comp_id):
     data = {
 
     }
 
-    render_to_response("company.html", data)
+    return render_to_response("company.html", data)
 # Create your views here.

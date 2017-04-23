@@ -20,6 +20,6 @@ from stock_rogue_app.views import index, companyView
 
 urlpatterns = [
     url(r'^$', index),
-    url(r'^companies/(?P<comp>[a-zA-Z0-9]+)/$', companyView, name='company'),
-    url(r'^admin/', admin.site.urls),
+    url(r'^company/(?P<comp_id>[0-9]+)/$', companyView, name='company'),
+    url(r'^admin/', admin.site.urls)
 ]
