@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
-from stock_rogue_app.models import Dane
+from stock_rogue_app.models import Dane, Spolka
 from StockRogue.downloader import update_data
 
 class Command(BaseCommand):
@@ -9,8 +9,12 @@ class Command(BaseCommand):
 
         for el in today:
             print("Tworzymy obiekt %s w bazie danych" % el)
+            s, created = Spolka.objects.get_or_create(
+                skrot=el["nazwa"]
+            )
+
             _, created = Dane.objects.get_or_create(
-                nazwa=el["nazwa"],
+                spolka=s,
                 data=el["data"],
                 kurs_otwarcia=el["kurs_otwarcia"],
                 kurs_max=el["kurs_max"],
