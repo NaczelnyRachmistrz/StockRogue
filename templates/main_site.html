@@ -5,6 +5,17 @@
     <title>Stock-Rogue</title>
 </head>
 <body>
-
+<header>Witam Was Kochani!</header>
+<main>
+    <section id="spolki">
+        <ul>
+        {% for s in spolki %}
+            <li>
+                <a href="{{ url('company', args=[s.id]) }}"> {{ s.skrot }}</a>
+            </li>
+        {% endfor %}
+        </ul>
+    </section>
+</main>
 </body>
 </html>

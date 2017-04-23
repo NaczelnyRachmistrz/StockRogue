@@ -3,8 +3,12 @@ from __future__ import unicode_literals
 from django.db import models
 
 
+class Spolka(models.Model):
+    skrot = models.CharField(max_length=50, unique=True)
+
+
 class Dane(models.Model):
-    nazwa = models.CharField(max_length=50)
+    spolka = models.ForeignKey('Spolka')
     data = models.DateField()
     kurs_otwarcia = models.FloatField()
     kurs_max = models.FloatField()
@@ -13,7 +17,8 @@ class Dane(models.Model):
     obrot = models.FloatField()
 
     class Meta:
-        unique_together = ('nazwa', 'data')
+        unique_together = ('spolka', 'data')
 
     def __str__(self):
-        return str(self.nazwa) + " " + str(self.data.strftime('%d/%m/%y'))
+        return str(self.spolka.skrot) + " " + str(self.data.strftime('%d/%m/%y'))
+
