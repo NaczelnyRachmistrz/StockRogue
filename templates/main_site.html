@@ -2,16 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Stock-Rogue</title>
+    <title>Stock Rogue</title>
+    <link rel="stylesheet" href="../static/stock_rogue_app_CSS/header.css"/>
+    <link rel="stylesheet" href="../static/stock_rogue_app_CSS/form.css"/>
+    <link rel="stylesheet" href="../static/stock_rogue_app_CSS/div.css"/>
 </head>
 <body>
-<header>Witam Was Kochani!</header>
+<header class="head">Stock Rogue</header>
 <main>
     <section id="spolki">
         <ul>
         {% for s in spolki %}
             <li>
-                <a href="{{ url('company', args=[s.id]) }}"> {{ s.skrot }}</a>
+                <a href="{{ url('company_form', args=[s.id]) }}"> {{ s.skrot }}</a>
             </li>
         {% endfor %}
         </ul>

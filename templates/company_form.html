@@ -2,16 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Notowania spółki {{ skrot }}</title>
+    <title>Stock Rogue</title>
     <link rel="stylesheet" href="../../static/stock_rogue_app_CSS/header.css"/>
     <link rel="stylesheet" href="../../static/stock_rogue_app_CSS/form.css"/>
     <link rel="stylesheet" href="../../static/stock_rogue_app_CSS/div.css"/>
 </head>
 <body>
-<header>Notowania spółki {{ skrot }}</header>
-<nav><a href="{{ url('index') }}">Strona główna</a> </nav>
+<header class="head">Wybrano spółkę {{ skrot }}</header>
 <main>
-      {% include skrot + '.html' %}
+    <section id="form">
+        <form action="{{url('company', args=[id])}}" method="post">
+          {{ form }}
+          <input type="submit" value="OK">
+      </form>
+    </section>
 </main>
 </body>
 </html>

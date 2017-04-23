@@ -31,21 +31,21 @@ def create_plot(plot_data, company):
     trace_max = go.Scatter(
         x=pl_data,
         y=pl_kurs_max,
-        name=company + "- kurs maksymalny",
+        name=company + " - kurs maksymalny",
         line=dict(color='#17BECF'),
         opacity=0.8)
 
     trace_min = go.Scatter(
         x=pl_data,
         y=pl_kurs_min,
-        name=company + "- kurs minimalny",
+        name=company + " - kurs minimalny",
         line=dict(color='#7F7F7F'),
         opacity=0.8)
 
     trace_min_pred = go.Scatter(
         x=pl_data_2,
         y=predict_min,
-        name=company + "- przewidywany kurs minimalny",
+        name=company + " - przewidywany kurs minimalny",
         line=dict(color='#ff0000'),
         mode='lines',
         opacity=0.8)
@@ -53,7 +53,7 @@ def create_plot(plot_data, company):
     trace_max_pred = go.Scatter(
         x=pl_data_2,
         y=predict_max,
-        name=company + "- przewidywany kurs maksymalny",
+        name=company + " - przewidywany kurs maksymalny",
         line=dict(color='#00ff00'),
         mode='lines',
         opacity=0.8)
@@ -61,7 +61,7 @@ def create_plot(plot_data, company):
     data = [trace_max, trace_min, trace_min_pred, trace_max_pred]
 
     layout = dict(
-        title='Notowania spółki ' + company,
+        title='Notowania spolki ' + company,
         xaxis=dict(
             rangeselector=dict(
                 buttons=list([

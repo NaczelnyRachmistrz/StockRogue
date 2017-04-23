@@ -16,10 +16,11 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from stock_rogue_app.views import index, companyView
+from stock_rogue_app.views import index, companyView, companyFormView
 
 urlpatterns = [
     url(r'^$', index, name='index'),
     url(r'^company/(?P<comp_id>[0-9]+)/$', companyView, name='company'),
+    url(r'^company_form/(?P<comp_id>[0-9]+)/$', companyFormView, name='company_form'),
     url(r'^admin/', admin.site.urls)
 ]
