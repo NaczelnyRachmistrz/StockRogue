@@ -21,15 +21,15 @@ def index(request):
 
 @csrf_exempt
 def companyView(request, comp_id):
-    if request.method == "POST":
-        days_strategy_form = DaysStrategyForm(request.POST)
+    if request.method == "GET":
+        days_strategy_form = DaysStrategyForm(request.GET)
         if not days_strategy_form.is_valid():
             #Jezeli pewne pole w formularzu nie zostało wprowadzone, przekierowujemy z powrotem do formularza
             HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
     spolka = get_object_or_404(Spolka, id=comp_id)
 
-    run_stock_rogue2(spolka.skrot, int(request.POST["ile_dni"]), request.POST["strategia"])
+    run_stock_rogue2(spolka.skrot, int(request.GET["ile_dni"]), request.GET["strategia"])
 
     data = {
         'skrot': spolka.skrot

@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Stock Rogue</title>
-    <link rel="stylesheet" href="../static/stock_rogue_app_CSS/header.css"/>
-    <link rel="stylesheet" href="../static/stock_rogue_app_CSS/form.css"/>
-    <link rel="stylesheet" href="../static/stock_rogue_app_CSS/div.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+{#    <link rel="stylesheet" href="../static/stock_rogue_app_CSS/header.css"/>#}
+{#    <link rel="stylesheet" href="../static/stock_rogue_app_CSS/form.css"/>#}
+{#    <link rel="stylesheet" href="../static/stock_rogue_app_CSS/div.css"/>#}
 </head>
 <body>
-<header class="head">Stock Rogue</header>
-<main>
-    <section id="spolki">
-        <ul>
+<div class="container">
+    <h1>Stock Rogue</h1>
+    <div class="list-group">
         {% for s in spolki %}
-            <li>
-                <a href="{{ url('company_form', args=[s.id]) }}"> {{ s.skrot }}</a>
-            </li>
+{#            <li class="list-group-item">#}
+                <a class="list-group-item" href="{{ url('company_form', args=[s.id]) }}"> {{ s.skrot }}</a>
+{#            </li>#}
         {% endfor %}
-        </ul>
     </section>
-</main>
+</div>
 </body>
 </html>
