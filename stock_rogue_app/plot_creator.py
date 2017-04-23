@@ -82,6 +82,6 @@ def create_plot(plot_data, company):
     )
 
     fig = dict(data=data, layout=layout)
-    off.plot(fig, filename=os.path.join(BASE_DIR, "templates",  company + ".html"), auto_open=FALSE)
+    off.plot(fig, filename=os.path.join(BASE_DIR, "templates",  company + ".html"), auto_open=False)
 
     #off.offline.plot(data)
