@@ -3,6 +3,7 @@ import os
 import plotly.graph_objs as go
 import plotly.offline as off
 
+from __future__ import unicode_literals
 from StockRogue.settings import BASE_DIR
 
 
