@@ -24,14 +24,16 @@ def database_set_up():
 
     # Directory with archive stock files
     arch_dir = "../spolki"
-
+    iter = 0
     for company in os.listdir(arch_dir):
+        iter += 1
         with open("../spolki/" + company, newline='') as csvfile:
+            print(iter, company)
             reader = csv.reader(csvfile)
             insert_list = []
             for row in reader:
                 if row[0] != "<TICKER>":
-                    if int(row[1]) > 20100000 & int(row[1]) != 20170421:
+                    if int(row[1]) > 20120000:
                         insert_list.append(Dane(
                             nazwa=row[0],
                             kurs_otwarcia=float(row[2]),
