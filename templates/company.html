@@ -5,9 +5,10 @@
     <title>Notowania spółki Alkohole {{ skrot }}</title>
 </head>
 <body>
-<header>Witam Was Kochani</header>
+<header>Notowania spółki {{ skrot }}</header>
+<nav><a href="{{ url('index') }}">Strona główna</a> </nav>
 <main>
-
+      {% include skrot + '.html' %}
 </main>
 </body>
 </html>

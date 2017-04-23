@@ -13,7 +13,7 @@ from stock_rogue_app.plot_creator import plot_preprocess, create_plot
 
 company_name = 'ASSECOPOL'
 company_data = select_data(company_name)
-start_data = company_data[len(company_data) - 1]['data']
+start_data = company_data[-1]['data']
 predicted_data = estimate_values(company_name, 10, 'A', company_data)
 predicted_data = predicted_data[0:-1]
 

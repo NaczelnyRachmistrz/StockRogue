@@ -19,7 +19,7 @@ from django.contrib import admin
 from stock_rogue_app.views import index, companyView
 
 urlpatterns = [
-    url(r'^$', index),
+    url(r'^$', index, name='index'),
     url(r'^company/(?P<comp_id>[0-9]+)/$', companyView, name='company'),
     url(r'^admin/', admin.site.urls)
 ]

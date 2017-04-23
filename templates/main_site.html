@@ -9,9 +9,9 @@
 <main>
     <section id="spolki">
         <ul>
-        {% for spolka in spolki %}
+        {% for s in spolki %}
             <li>
-                <a href="{{ url('company', args=[spolka.id]) }}"> {{ spolka.skrot }}</a>
+                <a href="{{ url('company', args=[s.id]) }}"> {{ s.skrot }}</a>
             </li>
         {% endfor %}
         </ul>
