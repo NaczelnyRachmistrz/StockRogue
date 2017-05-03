@@ -1,13 +1,19 @@
+# -*- coding: utf-8 -*-
+
 from __future__ import unicode_literals
 
 from django.db import models
 
 
 class Spolka(models.Model):
+    '''Model dla spółek i indeksów giełdowych. '''
+
     skrot = models.CharField(max_length=50, unique=True)
 
 
 class Dane(models.Model):
+    '''Model reprezentujący dane o spółce z wybranego dnia.'''
+
     spolka = models.ForeignKey('Spolka')
     data = models.DateField()
     kurs_otwarcia = models.FloatField()

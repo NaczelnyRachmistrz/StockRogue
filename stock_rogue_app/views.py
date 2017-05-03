@@ -1,18 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.http import HttpResponse, HttpResponseRedirect
-from stock_rogue_app.models import Dane, Spolka
+from django.http import HttpResponseRedirect
+from stock_rogue_app.models import Spolka
 from django.shortcuts import  render_to_response, get_object_or_404
-from stock_rogue_app.data_selector import select_data
-from StockRogue.downloader import update_data
-from .estimator import estimate_values
-from .plot_creator import plot_preprocess, create_plot
-from django.views.decorators.csrf import csrf_protect, csrf_exempt
+from django.views.decorators.csrf import csrf_exempt
 from .forms import DaysStrategyForm
 from stock_rogue_app.stock_rogue import *
 
 def index(request):
+    '''Widok strony głównej aplikacji'''
+
     data = {
         'spolki': Spolka.objects.all()
     }
@@ -21,15 +19,17 @@ def index(request):
 
 @csrf_exempt
 def companyView(request, comp_id):
+    '''Widok wykresu wybranej spółki'''
+
     if request.method == "GET":
         days_strategy_form = DaysStrategyForm(request.GET)
         if not days_strategy_form.is_valid():
-            #Jezeli pewne pole w formularzu nie zostało wprowadzone, przekierowujemy z powrotem do formularza
+            #Jeżeli pewne pole w formularzu nie zostało wprowadzone, przekierowujemy z powrotem do formularza
             HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
     spolka = get_object_or_404(Spolka, id=comp_id)
 
-    run_stock_rogue2(spolka.skrot, int(request.GET["ile_dni"]), request.GET["strategia"])
+    run_stock_rogue_from_view(spolka.skrot, int(request.GET["ile_dni"]), request.GET["strategia"])
 
     data = {
         'skrot': spolka.skrot
@@ -38,6 +38,8 @@ def companyView(request, comp_id):
     return render_to_response("company.html", data)
 
 def companyFormView(request, comp_id):
+    '''Widok formularza wyboru liczby dni i strategii'''
+
     data = {}
     spolka = get_object_or_404(Spolka, id=comp_id)
     data["form"] = DaysStrategyForm()

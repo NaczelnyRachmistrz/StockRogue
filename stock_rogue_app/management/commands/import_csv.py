@@ -1,10 +1,10 @@
-from django.conf import settings
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 from stock_rogue_app.models import Dane, Spolka
 from StockRogue.downloader import update_data
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
+        '''Funkcja uzupełniająca bazę danych o nowe dane.'''
         today = update_data()
 
         for el in today:

@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import plotly.plotly as py
 import os
 import plotly.graph_objs as go
 import plotly.offline as off
@@ -8,8 +7,9 @@ from StockRogue.settings import BASE_DIR
 
 
 def plot_preprocess(company_data, predicted_data, start_data):
-    """Preprocessing function for plot creation. It returns only data from some period of time
-    (beginning from start_data)"""
+    """Funkcja preprocessingowa. Zwraca jedynie dane począwszy od start_data (w postaci pary (dane_historyczne,
+        dane_przewidziane))"""
+
     preprocessed_data = []
     for el in company_data:
         if el["data"] >= start_data:
@@ -20,6 +20,10 @@ def plot_preprocess(company_data, predicted_data, start_data):
     return preprocessed_data
 
 def create_plot(plot_data, company):
+    """Główna funkcja odpowiedzialna za tworzenie wykresów. W wyniku jej działania w folderze templates
+        pojawia się plik .html z gotowym wykresem"""
+
+    # TODO .pop() dlatego, że dane Marcina zawierają dodatkowy rekord (nie wiem po co)
 
     plot_data[1].pop()
     pl_data = [el["data"] for el in plot_data[0]]
@@ -61,7 +65,7 @@ def create_plot(plot_data, company):
     data = [trace_max, trace_min, trace_min_pred, trace_max_pred]
 
     layout = dict(
-        title='Notowania spolki ' + company,
+        title='Notowania ' + company,
         xaxis=dict(
             rangeselector=dict(
                 buttons=list([
@@ -83,5 +87,3 @@ def create_plot(plot_data, company):
 
     fig = dict(data=data, layout=layout)
     off.plot(fig, filename=os.path.join(BASE_DIR, "templates",  company + ".html"), auto_open=False)
-
-    #off.offline.plot(data)

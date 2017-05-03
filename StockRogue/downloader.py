@@ -1,12 +1,14 @@
+# -*- coding: utf-8 -*-
+
 import csv
 import requests
-from datetime import datetime
 from dateutil import parser
 
 # Najnowsza sesja
 CSV_URL = 'http://bossa.pl/pub/ciagle/mstock/sesjacgl/sesjacgl.prn'
 
 def update_data():
+    '''Funkcja aktualizająca bazę danych o dane z poprzedniej sesji.'''
 
     with requests.Session() as s:
         print("Pobieramy dane z bossy...")

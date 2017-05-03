@@ -9,6 +9,22 @@ from stock_rogue_app.data_selector import select_data
 from .estimator import estimate_values
 from .plot_creator import plot_preprocess, create_plot
 
+def run_stock_rogue_from_view(name, interval_length, strategy_name):
+    # Zbiera dane spółki z bazy danych
+    company_data = select_data(name)
+
+    # Przewiduje wartość akcji spółki w zadanym okresie na podstawie wybranej strategii
+    predicted_data = estimate_values(name, interval_length, strategy_name, company_data)
+
+    # Preprocessing danych do stworzenia wykresu
+    plot_data = plot_preprocess(company_data, predicted_data, company_data[-1]["data"])
+
+    # Tworzy wykres i go zapisuje
+    plot = create_plot(plot_data, name)
+
+#TODO To co niżej przypuszczalnie do wywalenia, chyba że by się z jakiegoś powodu przydało do II iteracji
+
+'''
 # Dictionary with program parameters
 flag = {}
 
@@ -65,26 +81,11 @@ def run_stock_rogue():
     #Saving plot to a file
     save_plot(plot, flag['out'])
 
-def run_stock_rogue2(name, interval_length, strategy_name):
-    # Gathers company data from a database
-    company_data = select_data(name)
-
-    # Predicts stock prices for a given interval of time using specific strategy
-    predicted_data = estimate_values(name, interval_length, strategy_name, company_data)
-
-    # Preprocess of data used for plot creating
-    plot_data = plot_preprocess(company_data, predicted_data, company_data[-1]["data"])
-
-    # Creates plot
-    plot = create_plot(plot_data, name)
-
-    #Saving plot to a file
-    return plot
-
-
 if __name__ == "__main__":
     """ Preprocess before running stock_rogue. """
 
     read_flags(sys.argv[1:])
 
     run_stock_rogue()
+
+'''
