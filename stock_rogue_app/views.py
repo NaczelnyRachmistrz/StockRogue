@@ -10,13 +10,31 @@ from stock_rogue_app.stock_rogue import *
 
 def index(request):
     '''Widok strony głównej aplikacji'''
+    return render_to_response("main_site.html")
+
+
+def allView(request):
+    '''Widok wszystkich spółek'''
 
     data = {
         'spolki': Spolka.objects.all()
     }
 
-    return render_to_response("main_site.html", data)
+    return render_to_response("all.html", data)
 
+
+def searchView(request):
+    '''Widok wszystkich spółek'''
+    if request.method == 'GET' and 'wyszukiwanie' in request.GET:
+        nazwa = request.GET["wyszukiwanie"]
+        spółki = Spolka.objects.all()
+        spółki_do_temp = []
+        for spółka in spółki:
+            skrót = spółka.skrot.lower()
+            if skrót.find(nazwa.lower()) != -1:
+                spółki_do_temp.append(spółka)
+    data = locals()
+    return render_to_response("search.html", data)
 @csrf_exempt
 def companyView(request, comp_id):
     '''Widok wykresu wybranej spółki'''
