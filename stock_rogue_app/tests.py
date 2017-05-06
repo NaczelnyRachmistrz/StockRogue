@@ -13,6 +13,41 @@ from stock_rogue_app.plot_creator import plot_preprocess, create_plot
 
 #TODO Tu się powinny pokazać prawdziwe testy
 
+class TestOfTests(TestCase):
+
+    def setUp(self):
+        self.jeden = 1
+        self.dwa = 2
+
+    def testTests(self):
+        self.assertEquals(self.jeden + self.jeden, self.dwa)
+        # self.assertEquals(True, False)
+
+
+class IndexViewTest(TestCase):
+
+    def setUp(self):
+        pass
+
+    def testIndexView(self):
+        response = self.client.get('/')
+        self.assertEquals(response.status_code, 200)
+
+class CompanyViewTest(TestCase):
+
+    # Do naprawienia!!!
+    def setUp(self):
+
+        pass
+
+    def testCompanyView(self):
+        # response = self.client.get('/'), {
+        #     'strategia' : ('A', 'Main'),
+        #     'ile_dni' : 4,
+        # }
+        # print (response)
+        pass
+
 """
 company_name = 'ASSECOPOL'
 company_data = select_data(company_name)
