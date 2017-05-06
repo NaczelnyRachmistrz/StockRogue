@@ -13,14 +13,13 @@
 <body>
 <div class="container">
     <h1>Stock Rogue</h1>
-    <form action="/all/">
-        <input type="submit" value="Wszystkie spółki">
-    </form>
-    <form action="/search">
-        <input type="submit" value="Wyszukaj spółkę">
-    </form>
-        <input type="submit" value="Albo nie :)">
-    </form>
+    <div class="list-group">
+        {% for s in spolki %}
+{#            <li class="list-group-item">#}
+                <a class="list-group-item" href="{{ url('company_form', args=[s.id]) }}"> {{ s.skrot }}</a>
+{#            </li>#}
+        {% endfor %}
+    </div>
 </div>
 </body>
 </html>
