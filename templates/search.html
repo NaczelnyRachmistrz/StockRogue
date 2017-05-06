@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search</title>
+</head>
+<body>
+
+<form method="get" action="/search/">
+    Wpisz nazwę spółki lub jej część <input type="text" name="wyszukiwanie"> <input type="submit" value="Szukaj">
+</form>
+
+
+<ul>
+    {% for spółka in spółki_do_temp %}
+    <li>
+        <a href="{{ url('company', args=[])}}">{{ spółka.nazwa }}</a>
+    </li>
+    {% endfor %}
+</body>
+</html>
