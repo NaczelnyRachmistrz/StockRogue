@@ -25,12 +25,13 @@ def allView(request):
 
 def searchView(request):
     '''Widok wszystkich spółek'''
-
+    if request.method == 'GET' and 'wyszukiwanie' in request.GET:
         nazwa = request.GET["wyszukiwanie"]
         spółki = Spolka.objects.all()
         spółki_do_temp = []
         for spółka in spółki:
-            if spółka.nazwa.find(nazwa.lower()) != -1 or spółka.nazwa.find(nazwa.title()) != -1:
+            skrót = spółka.skrot.lower()
+            if skrót.find(nazwa.lower()) != -1:
                 spółki_do_temp.append(spółka)
     data = locals()
     return render_to_response("search.html", data)

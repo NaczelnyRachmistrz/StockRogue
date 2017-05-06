@@ -14,7 +14,7 @@
 <ul>
     {% for spółka in spółki_do_temp %}
     <li>
-        <a href="{{ url('company', args=[])}}">{{ spółka.nazwa }}</a>
+        <a href="{{ url('company_form', args=[spółka.id])}}">{{ spółka.skrot}}</a>
     </li>
     {% endfor %}
 </body>
