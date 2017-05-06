@@ -28,3 +28,4 @@ class Dane(models.Model):
     def __str__(self):
         return str(self.spolka.skrot) + " " + str(self.data.strftime('%d/%m/%y'))
 
+

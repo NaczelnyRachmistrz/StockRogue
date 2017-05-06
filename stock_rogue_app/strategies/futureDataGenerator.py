@@ -1,7 +1,7 @@
 # {"nazwa":row[0], "kurs_otwarcia":float(row[2]), "data":parser.parse(row[1]), "kurs_max": float(row[3]),
 #                 "kurs_min": float(row[4]), "kurs_biezacy": float(row[5]), "obrot": float(row[6])}
 from datetime import timedelta, date
-
+from stock_rogue_app.models import Dane
 # This prepares and returns the list of days for a specific company.
 # It omits only weekends.
 def generate_future_data(company_name, predict_interval, start_date):
@@ -12,6 +12,9 @@ def generate_future_data(company_name, predict_interval, start_date):
         while date.weekday() > 4:
             date += timedelta(1)
         # print(date)
+
+        #proponuję zmienić na:
+        #result[idx] = Dane(nazwa=company_name, data=date).__dict__
         result[idx] = {'nazwa' : company_name,
                        'data' : date,
                        'kurs_otwarcia' : 0.0,

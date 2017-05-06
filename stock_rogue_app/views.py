@@ -31,9 +31,11 @@ def companyView(request, comp_id):
 
     run_stock_rogue_from_view(spolka.skrot, int(request.GET["ile_dni"]), request.GET["strategia"])
 
-    data = {
-        'skrot': spolka.skrot
-    }
+    #Chyba tak lepiej
+    data = spolka.__dict__
+    #data = {
+    #    'skrot': spolka.skrot
+    #}
 
     return render_to_response("company.html", data)
 
