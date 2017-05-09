@@ -13,28 +13,29 @@ def index(request):
     return render_to_response("main_site.html")
 
 
-def allView(request):
-    '''Widok wszystkich spółek'''
+def allView(request, type):
+    '''Widok wszystkich spółek lub indeksów'''
 
     data = {
-        'spolki': Spolka.objects.all()
+        'spolki': Spolka.objects.filter(typ=type)
     }
 
     return render_to_response("all.html", data)
 
 
 def searchView(request):
-    '''Widok wszystkich spółek'''
+    '''Widok strony wyszukiwania spółek'''
     if request.method == 'GET' and 'wyszukiwanie' in request.GET:
         nazwa = request.GET["wyszukiwanie"]
-        spółki = Spolka.objects.all()
-        spółki_do_temp = []
-        for spółka in spółki:
-            skrót = spółka.skrot.lower()
-            if skrót.find(nazwa.lower()) != -1:
-                spółki_do_temp.append(spółka)
+        spolki = Spolka.objects.filter(typ=Spolka.SPOLKA)
+        spolki_do_temp = []
+        for spolka in spolki:
+            skrot = spolka.skrot.lower()
+            if skrot.find(nazwa.lower()) != -1:
+                spolki_do_temp.append(spolka)
     data = locals()
     return render_to_response("search.html", data)
+
 @csrf_exempt
 def companyView(request, comp_id):
     '''Widok wykresu wybranej spółki'''

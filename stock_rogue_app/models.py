@@ -8,8 +8,22 @@ from django.db import models
 class Spolka(models.Model):
     '''Model dla spółek i indeksów giełdowych. '''
 
+    SPOLKA = 'SP'
+    INDEKS = 'IN'
+    INNE = 'OT'
+    SpolkaChoices = (
+        (SPOLKA, 'Spółka'),
+        (INDEKS, 'Indeks'),
+        (INNE, 'Inne')
+    )
+
     skrot = models.CharField(max_length=50, unique=True)
 
+    typ = models.CharField(
+        max_length=2,
+        choices=SpolkaChoices,
+        default=INNE
+    )
 
 class Dane(models.Model):
     '''Model reprezentujący dane o spółce z wybranego dnia.'''
