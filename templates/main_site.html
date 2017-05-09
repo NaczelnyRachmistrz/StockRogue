@@ -5,22 +5,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Stock Rogue</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-{#    <link rel="stylesheet" href="../static/stock_rogue_app_CSS/header.css"/>#}
-{#    <link rel="stylesheet" href="../static/stock_rogue_app_CSS/form.css"/>#}
-{#    <link rel="stylesheet" href="../static/stock_rogue_app_CSS/div.css"/>#}
+    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 <body>
 <div class="container">
-    <h1>Stock Rogue</h1>
-    <form action="/all/">
-        <input type="submit" value="Wszystkie spółki">
-    </form>
-    <form action="/search">
-        <input type="submit" value="Wyszukaj spółkę">
-    </form>
+    <section>
+        <header>
+            <img src="../static/logo/stock_rogue_big.png" width="800px">
+        </header>
+
+        <form action="/all/SP">
+            <input type="submit" value="Wszystkie spółki">
+        </form>
+        <form action="/all/IN">
+            <input type="submit" value="Wszystkie indeksy">
+        </form>
+        <form action="/search">
+            <input type="submit" value="Wyszukaj spółkę">
+        </form>
         <input type="submit" value="Albo nie :)">
-    </form>
+        </form>
+    </section>
 </div>
 </body>
 </html>

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 ## Naive strategy that looks only at one day past.
 ##
 

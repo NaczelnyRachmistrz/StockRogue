@@ -23,6 +23,6 @@ urlpatterns = [
     url(r'^company/(?P<comp_id>[0-9]+)/$', companyView, name='company'),
     url(r'^company_form/(?P<comp_id>[0-9]+)/$', companyFormView, name='company_form'),
     url(r'^search/', searchView, name='search_view'),
-    url(r'^all/', allView, name='all_view'),
+    url(r'^all/(?P<type>[A-Z]*)/$', allView, name='all_view'),
     url(r'^admin/', admin.site.urls)
 ]

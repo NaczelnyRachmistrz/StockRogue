@@ -1,0 +1,52 @@
+table {
+    border-collapse: collapse;
+    border: 1px;
+    padding: 10px;
+}
+
+table.center {
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+th {
+    background: #d1cdd1;
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+td {
+
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+input {
+    padding: 10px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 3px solid #ccc;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+}
+
+input:focus {
+    border: 3px solid #555;
+}
+
+h1 {
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
+}
+
+.horizontal_chart {
+    float: left;
+    height: 20px;
+}

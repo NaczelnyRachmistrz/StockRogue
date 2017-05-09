@@ -82,6 +82,9 @@ def create_plot(plot_data, company):
             ),
             rangeslider=dict(),
             type='date'
+        ),
+        yaxis=dict(
+            autorange=True
         )
     )
 
