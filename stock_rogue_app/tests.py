@@ -60,7 +60,6 @@ class ViewTests(TestCase):
 
     def testAllView(self):
         response = self.client.post('/all/SP/')
-        # print(response)
         self.assertEquals(response.status_code, 200)
 
     def testNoArgumentsSearchView(self):
@@ -70,13 +69,3 @@ class ViewTests(TestCase):
     def testSearchView(self):
         response = self.client.get('/search/', { 'wyszukiwanie' : '' })
         self.assertEquals(response.status_code, 200)
-
-"""
-company_name = 'ASSECOPOL'
-company_data = select_data(company_name)
-start_data = company_data[-1]['data']
-predicted_data = estimate_values(company_name, 10, 'A', company_data)
-predicted_data = predicted_data[0:-1]
-
-plot_data = plot_preprocess(company_data, predicted_data, start_data)
-create_plot(plot_data, company_name)"""
