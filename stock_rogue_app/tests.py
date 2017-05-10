@@ -12,6 +12,8 @@ from stock_rogue_app.models import Dane
 from stock_rogue_app.plot_creator import plot_preprocess, create_plot
 
 #TODO Tu się powinny pokazać prawdziwe testy
+from stock_rogue_app.models import Spolka
+
 
 class TestOfTests(TestCase):
 
@@ -33,20 +35,41 @@ class IndexViewTest(TestCase):
         response = self.client.get('/')
         self.assertEquals(response.status_code, 200)
 
-class CompanyViewTest(TestCase):
+class ViewTests(TestCase):
 
-    # Do naprawienia!!!
+    # Spolka musi mieć co najmniej 1 wiersz w tabeli dane!
     def setUp(self):
+        self.spolka1 = Spolka.objects.create(id=1, typ='SP', skrot='blabla')
+        self.dane1 = Dane.objects.create(spolka=self.spolka1,
+                                         data=datetime.today(),
+                                         kurs_otwarcia=10,
+                                         kurs_min=10,
+                                         kurs_max=10,
+                                         kurs_biezacy=10,
+                                         obrot=10)
 
-        pass
+    def testCompanyFormView(self):
+        response = self.client.get('/company_form/1/')
+        self.assertEquals(response.status_code, 200)
 
     def testCompanyView(self):
-        # response = self.client.get('/'), {
-        #     'strategia' : ('A', 'Main'),
-        #     'ile_dni' : 4,
-        # }
-        # print (response)
-        pass
+        response = self.client.get('/company/1/', {'ile_dni' : 1, 'strategia' : ('B', 'Naive')})
+        self.assertEquals(response.status_code, 200)
+        response_wrong = self.client.get('/company/2/', {'ile_dni' : 1, 'strategia' : ('B', 'Naive')})
+        self.assertEquals(response_wrong.status_code, 404)
+
+    def testAllView(self):
+        response = self.client.post('/all/SP/')
+        # print(response)
+        self.assertEquals(response.status_code, 200)
+
+    def testNoArgumentsSearchView(self):
+        response = self.client.get('/search/')
+        self.assertEquals(response.status_code, 200)
+
+    def testSearchView(self):
+        response = self.client.get('/search/', { 'wyszukiwanie' : '' })
+        self.assertEquals(response.status_code, 200)
 
 """
 company_name = 'ASSECOPOL'

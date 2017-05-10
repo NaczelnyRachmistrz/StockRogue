@@ -109,6 +109,7 @@ def predict_future_values(company_name, number_of_past_days, company_data, resul
         trend_min = predict_future_average_name_value(strategy_data, company_data_trends, 'kurs_min')
         trend_max = predict_future_average_name_value(strategy_data, company_data_trends, 'kurs_max')
         trend_biezacy = predict_future_average_name_value(strategy_data, company_data_trends, 'kurs_biezacy')
+        # Tutaj jakaś magia.
         if trend_min > trend_max:
             trend_max, trend_min = trend_min, trend_max
         if result[idx - 1]['kurs_min'] * 1.03 < result[idx - 1]['kurs_max']:
