@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # {"nazwa":row[0], "kurs_otwarcia":float(row[2]), "data":parser.parse(row[1]), "kurs_max": float(row[3]),
 #                 "kurs_min": float(row[4]), "kurs_biezacy": float(row[5]), "obrot": float(row[6])}
 from datetime import timedelta, date

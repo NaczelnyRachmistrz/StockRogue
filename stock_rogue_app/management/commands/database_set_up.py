@@ -18,7 +18,7 @@ class Command(BaseCommand):
                 insert_list = []
                 for row in reader:
                     if row[0] != "<TICKER>":
-                        if int(row[1]) > 20100000:
+                        if int(row[1]) > 2010000:
                             print(row[0] + " " + row[1])
 
                             s, created = Spolka.objects.get_or_create(
