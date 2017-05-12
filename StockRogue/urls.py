@@ -26,5 +26,6 @@ urlpatterns = [
     url(r'^all/([A-Z]*)/$', allView, name='all_view'),
     url(r'^login/$', loginView, name='login'),
     url(r'^logout/$', logoutView, name='logout'),
+    url(r'^register/$', registerView, name='register'),
     url(r'^admin/', admin.site.urls)
 ]

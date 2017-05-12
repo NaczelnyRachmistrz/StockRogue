@@ -108,3 +108,5 @@ def loginView(request):
     else:
         form = LoginForm()
         return render(request, "registration/login.html", locals())
+
+#def registerView(request):
