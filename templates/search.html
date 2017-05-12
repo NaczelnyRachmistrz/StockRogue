@@ -1,16 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Wyszukaj spółkę</title>
-    <link rel="stylesheet" href="../static/style.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-</head>
+{% extends "super.html" %}
+
+{% block title %} - wyszukaj spółkę {% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
 <body>
-    <div class="container">
+
+{% block navbar %}
+   {{ super() }}
+{% endblock %}
+{% block content %}
+    {{ super() }}
+    <div class="container-fluid">
         <form method="get" action="/search/">
             Wpisz nazwę spółki lub jej część <input type="text" name="wyszukiwanie"> <input type="submit" value="Szukaj">
         </form>
@@ -21,5 +22,9 @@
             {% endfor %}
         </div>
     </div>
+{% endblock %}
+{% block footer %}
+    {{ super() }}
+{% endblock %}
 </body>
 </html>

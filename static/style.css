@@ -1,52 +1,37 @@
-table {
-    border-collapse: collapse;
-    border: 1px;
-    padding: 10px;
+body {
+    font: 400 15px Lato, sans-serif;
+    margin-top: 30px;
 }
 
-table.center {
-    width: 80%;
-    margin-left: 10%;
-    margin-right: 10%;
+.jumbotron {
+    background-image:url(../static/money_white.jpg) ;
+    color: #000000;
+    padding: 80px 25px;
+    font-family: "Roboto", sans-serif;
 }
 
-th {
-    background: #d1cdd1;
-    padding: 8px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+.container-fluid {
+    padding: 45px 40px;
 }
 
-td {
-
-    padding: 8px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+.logo {
+    font-size: 200px;
 }
 
-input {
-    padding: 10px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    border: 3px solid #ccc;
-    -webkit-transition: 0.5s;
-    transition: 0.5s;
-    outline: none;
+.navbar-brand>img {
+  height: 60px;
+  width: auto;
+  margin-top: -15px;
 }
 
-input:focus {
-    border: 3px solid #555;
+footer .glyphicon {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: silver;
 }
 
-h1 {
-    text-align: center;
-}
-
-h2 {
-    text-align: center;
-}
-
-.horizontal_chart {
-    float: left;
-    height: 20px;
+@media screen and (max-width: 768px) {
+    .col-sm-4 {
+        text-align: center;
+    }
 }

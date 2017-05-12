@@ -1,33 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Stock Rogue</title>
-    <link rel="stylesheet" href="../static/style.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-</head>
-<body>
-<div class="container">
-    <section>
-        <header>
-            <img src="../static/logo/stock_rogue_big.png" width="800px">
-        </header>
+{% extends "super.html" %}
 
-        <form action="/all/SP">
-            <input type="submit" value="Wszystkie spółki">
-        </form>
-        <form action="/all/IN">
-            <input type="submit" value="Wszystkie indeksy">
-        </form>
-        <form action="/search">
-            <input type="submit" value="Wyszukaj spółkę">
-        </form>
-        <input type="submit" value="Albo nie :)">
-        </form>
-    </section>
+{% block title %} - strona główna {% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+<body>
+
+{% block navbar %}
+   {{ super() }}
+{% endblock %}
+
+{% block content %}
+  {{ super }}
+<div class="jumbotron text-center">
+  <h1>Witamy Was Kochani!</h1>
+  <a href="/register" class="btn btn-default btn-lg">Zarejestruj się</a>
+  <a href="/about" class="btn btn-default btn-lg">Informacje</a>
+  <a href="/contact" class="btn btn-default btn-lg">Kontakt</a>
 </div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-8">
+      <h2>Czym jest Stock Rogue?</h2>
+      <p>Stock Rogue to unikalna aplikacja umożliwiająca użytkownikom
+         testowanie różnych strategii inwestowania, w oparciu o modele
+         ewaluujące kursy akcji na podstawie danych historycznych. Dzięki nam
+         będziesz wiedział, czy Twoja strategia się opłaca! </p>
+      <a href="/about" class="btn btn-default btn-lg">Zobacz, jakie to proste!</a>
+    </div>
+    <div class="col-sm-4">
+      <span class="glyphicon glyphicon-question-sign logo"></span>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid bg-grey">
+  <div class="row">
+    <div class="col-sm-4">
+      <span class="glyphicon glyphicon-usd logo"></span>
+    </div>
+    <div class="col-sm-8">
+      <h2>Nasze cele</h2>
+      <p><strong>TESTOWANIE</strong> Nasze narzędzia umożliwiają
+        efektywne testowanie różnych strategii.</p>
+      <p><strong>ANALIZA</strong> Dokładna analizę ułatwia opracowanie statystyczne
+        wyników.</p>
+      <p><strong>WIZUALIZACJA</strong> Nasze dane przedstawiamy na wykresach.</p>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+{% block footer %}
+    {{ super() }}
+{% endblock %}
+
 </body>
 </html>

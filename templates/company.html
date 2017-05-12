@@ -1,22 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Notowania spółki {{ skrot }}</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-{#    <link rel="stylesheet" href="../static/stock_rogue_app_CSS/header.css"/>#}
-        <link rel="stylesheet" href="../static/stock_rogue_app_CSS/form.css"/>
-{#    <link rel="stylesheet" href="../static/stock_rogue_app_CSS/div.css"/>#}
-</head>
+{% extends "super.html" %}
+
+{% block title %} - wybrano spółkę {{ id }} {% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
 <body>
-<div class="container">
-<h1>Notowania spółki {{ skrot }}</h1>
+
+{% block navbar %}
+   {{ super() }}
+{% endblock %}
+{% block content %}
+<div class="container-fluid">
+<h1 style="margin-top: 70px">Notowania spółki {{ skrot }}</h1>
 <nav><a href="{{ url('index') }}">Strona główna</a> </nav>
 <main>
       {% include skrot + '.html' %}
 </main>
 </div>
+{% endblock %}
+{% block footer %}
+    {{ super() }}
+{% endblock %}
 </body>
 </html>
