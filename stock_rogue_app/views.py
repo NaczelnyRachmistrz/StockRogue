@@ -1,16 +1,23 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseForbidden, HttpResponse
+from django.template import RequestContext
+from django.template.loader import get_template
+
 from stock_rogue_app.models import Spolka
-from django.shortcuts import  render_to_response, get_object_or_404
+from django.shortcuts import render_to_response, get_object_or_404, render
 from django.views.decorators.csrf import csrf_exempt
-from .forms import DaysStrategyForm
-from stock_rogue_app.stock_rogue import *
+
+from stock_rogue_app.stock_rogue import run_stock_rogue_from_view
+from stock_rogue_app.forms import DaysStrategyForm, LoginForm
+from django.views.decorators.http import require_POST
+from django.contrib.auth import authenticate, login, logout
+
 
 def index(request):
     '''Widok strony głównej aplikacji'''
-    return render_to_response("main_site.html")
+    return render(request, "main_site.html")
 
 
 def allView(request, type):
@@ -20,7 +27,7 @@ def allView(request, type):
         'spolki': Spolka.objects.filter(typ=type)
     }
 
-    return render_to_response("all.html", data)
+    return render(request, "all.html", data)
 
 
 def searchView(request):
@@ -34,7 +41,8 @@ def searchView(request):
             if skrot.find(nazwa.lower()) != -1:
                 spolki_do_temp.append(spolka)
     data = locals()
-    return render_to_response("search.html", data)
+    return render(request, "search.html", data)
+
 
 @csrf_exempt
 def companyView(request, comp_id):
@@ -43,20 +51,18 @@ def companyView(request, comp_id):
     if request.method == "GET":
         days_strategy_form = DaysStrategyForm(request.GET)
         if not days_strategy_form.is_valid():
-            #Jeżeli pewne pole w formularzu nie zostało wprowadzone, przekierowujemy z powrotem do formularza
+            # Jeżeli pewne pole w formularzu nie zostało wprowadzone,
+            # przekierowujemy z powrotem do formularza
             HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
     spolka = get_object_or_404(Spolka, id=comp_id)
 
     run_stock_rogue_from_view(spolka.skrot, int(request.GET["ile_dni"]), request.GET["strategia"])
 
-    #Chyba tak lepiej
     data = spolka.__dict__
-    #data = {
-    #    'skrot': spolka.skrot
-    #}
 
-    return render_to_response("company.html", data)
+    return render(request, "company.html", data)
+
 
 def companyFormView(request, comp_id):
     '''Widok formularza wyboru liczby dni i strategii'''
@@ -67,4 +73,38 @@ def companyFormView(request, comp_id):
     data["skrot"] = spolka.skrot
     data['id'] = comp_id
 
-    return render_to_response("company_form.html", data)
+    return render(request, "company_form.html", data)
+
+
+# def loginView(request):
+#    if request.method == "POST":
+#        user = authenticate(username=request.POST["username"], password=request.POST["password"])
+#        if user is not None:
+#            login(request, user)
+#            return HttpResponseRedirect("/")
+#        else:
+#            return HttpResponseForbidden("Bad username or password.")
+#    else:
+#        render_to_response("registration/login.html")
+
+
+@require_POST
+def logoutView(request):
+    url = request.POST["redirect"]
+    logout(request)
+    return HttpResponseRedirect(url)
+
+
+def loginView(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            user = authenticate(username=form.cleaned_data['username'],
+                                password=form.cleaned_data['password'])
+            login(request, user)
+            return HttpResponseRedirect("/")
+        else:
+            return HttpResponseForbidden("Bad username or password.")
+    else:
+        form = LoginForm()
+        return render(request, "registration/login.html", locals())

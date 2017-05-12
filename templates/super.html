@@ -35,7 +35,16 @@
                     <li><a href="/strategies">STRATEGIE</a></li>
                     <li><a href="/search">WYSZUKAJ</a></li>
                     <li><a href="/contact">KONTAKT</a></li>
-                    <li><a href="/login">ZALOGUJ SIĘ</a></li>
+                    {% if not request.user.is_authenticated %}
+                        <li><a href="/login">ZALOGUJ SIĘ</a></li>
+                    {% else %}
+                        <li>
+                            <form method="post" action="/logout/"><input type="submit" value="WYLOGUJ SIĘ">
+                                {{ csrf_input }}
+                                <input type="hidden" value="{{ request.path }}" name="redirect">
+                            </form>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>

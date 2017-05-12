@@ -11,6 +11,7 @@ class Spolka(models.Model):
     SPOLKA = 'SP'
     INDEKS = 'IN'
     INNE = 'OT'
+
     SpolkaChoices = (
         (SPOLKA, 'Spółka'),
         (INDEKS, 'Indeks'),
