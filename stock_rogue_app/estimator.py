@@ -18,7 +18,7 @@ def estimate_values(comp_id, predict_interval, strategy, company_data):
 
     result = generate_future_data(comp_id, predict_interval, datetime.date.today())
 
-    # Zaimplementowane strategie patrzą jedynie 30 dni wstecz
+    # Zaimplementowane strategie patrzą jedynie 50 dni wstecz
     number_of_past_days = min(50, len(company_data))
     if strategy == 'A':
         future_values = strategyA.predict_future(comp_id,
