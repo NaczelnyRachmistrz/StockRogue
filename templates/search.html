@@ -1,30 +1,35 @@
 {% extends "super.html" %}
 
 {% block title %} - wyszukaj spółkę {% endblock %}
+
 {% block head %}
-  {{ super() }}
+    {{ super() }}
 {% endblock %}
+
 <body>
 
 {% block navbar %}
-   {{ super() }}
+    {{ super() }}
 {% endblock %}
+
 {% block content %}
     {{ super() }}
     <div class="container-fluid">
         <form method="get" action="/search/">
-            Wpisz nazwę spółki lub jej część <input type="text" name="wyszukiwanie"> <input type="submit" value="Szukaj">
+            Wpisz nazwę spółki lub jej część <input type="text" name="wyszukiwanie"> <input type="submit"
+                                                                                            value="Szukaj">
         </form>
 
         <div class="list-group">
             {% for spolka in spolki_do_temp %}
-                <a class="list-group-item" href="{{ url('company_form', args=[spolka.id])}}">{{ spolka.skrot}}</a>
+                <a class="list-group-item" href="{{ url('company_form', args=[spolka.id])}}">{{ spolka.skrot }}</a>
             {% endfor %}
         </div>
     </div>
 {% endblock %}
+
 {% block footer %}
     {{ super() }}
 {% endblock %}
+
 </body>
-</html>

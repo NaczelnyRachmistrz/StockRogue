@@ -1,56 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-{% block head %}
-  <title>Stock Rogue - {% block title %}{% endblock %}</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/static/style.css">
-  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-{% endblock %}
+    {% block head %}
+        <title>Stock Rogue - {% block title %}{% endblock %}</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/static/style.css">
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    {% endblock %}
 </head>
 
 <body id="stockRogueMain">
 
- <nav class="navbar navbar-default navbar-fixed-top">
-  {% block navbar %}
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="/"><img src="/static/logo/logo_cropped.png" alt="Stock Rogue""></a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="/all/SP">SPÓŁKI</a></li>
-        <li><a href="/all/IN">INDEKSY</a></li>
-        <li><a href="/strategies">STRATEGIE</a></li>
-        <li><a href="/search">WYSZUKAJ</a></li>
-        <li><a href="/contact">KONTAKT</a></li>
-        <li><a href="/login">ZALOGUJ SIĘ</a></li>
-      </ul>
-    </div>
-  </div>
-  {% endblock %}
+<nav class="navbar navbar-default navbar-fixed-top">
+    {% block navbar %}
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/"><img src="/static/logo/logo_cropped.png" alt="Stock Rogue""></a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/all/SP">SPÓŁKI</a></li>
+                    <li><a href="/all/IN">INDEKSY</a></li>
+                    <li><a href="/strategies">STRATEGIE</a></li>
+                    <li><a href="/search">WYSZUKAJ</a></li>
+                    <li><a href="/contact">KONTAKT</a></li>
+                    <li><a href="/login">ZALOGUJ SIĘ</a></li>
+                </ul>
+            </div>
+        </div>
+    {% endblock %}
 </nav>
 
- <div id="content">{% block content %}{% endblock %}</div>
+<div id="content">{% block content %}{% endblock %}</div>
 
 <footer class="container-fluid text-center">
-  {% block footer %}
-  <a href="#stockRogueMain" title="To Top">
-    <span class="glyphicon glyphicon-chevron-up"></span>
-  </a>
-  <p>Stock Rogues &copy; IO project</p>
-  {% endblock %}
+    {% block footer %}
+        <a href="#stockRogueMain" title="To Top">
+            <span class="glyphicon glyphicon-chevron-up"></span>
+        </a>
+        <p>Stock Rogues &copy; IO project</p>
+    {% endblock %}
 </footer>
 
 </body>
+
 </html>

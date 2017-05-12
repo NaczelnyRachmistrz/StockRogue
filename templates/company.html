@@ -1,25 +1,33 @@
 {% extends "super.html" %}
 
 {% block title %} - wybrano spółkę {{ id }} {% endblock %}
+
 {% block head %}
-  {{ super() }}
+    {{ super() }}
 {% endblock %}
+
 <body>
 
 {% block navbar %}
-   {{ super() }}
+    {{ super() }}
 {% endblock %}
+
 {% block content %}
-<div class="container-fluid">
-<h1 style="margin-top: 70px">Notowania spółki {{ skrot }}</h1>
-<nav><a href="{{ url('index') }}">Strona główna</a> </nav>
-<main>
-      {% include skrot + '.html' %}
-</main>
-</div>
+    <div class="container-fluid">
+        <h1 style="margin-top: 70px">Notowania spółki {{ skrot }}</h1>
+
+        <nav>
+            <a href="{{ url('index') }}">Strona główna</a>
+        </nav>
+
+        <main>
+            {% include skrot + '.html' %}
+        </main>
+    </div>
 {% endblock %}
+
 {% block footer %}
     {{ super() }}
 {% endblock %}
+
 </body>
-</html>
