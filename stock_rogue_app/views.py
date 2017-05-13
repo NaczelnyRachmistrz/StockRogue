@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.http import HttpResponseRedirect, HttpResponseForbidden, HttpResponse
-from django.template import RequestContext
-from django.template.loader import get_template
+from django.http import HttpResponseRedirect, HttpResponseForbidden
 
 from stock_rogue_app.models import Spolka
-from django.shortcuts import render_to_response, get_object_or_404, render
+from django.shortcuts import get_object_or_404, render
 from django.views.decorators.csrf import csrf_exempt
 
 from stock_rogue_app.stock_rogue import run_stock_rogue_from_view
@@ -14,29 +12,32 @@ from stock_rogue_app.forms import DaysStrategyForm, LoginForm
 from django.views.decorators.http import require_POST
 from django.contrib.auth import authenticate, login, logout
 
+
 def index(request):
-    '''Widok strony głównej aplikacji'''
+    '''Widok strony głównej'''
     return render(request, "main_site.html")
 
 
 def aboutView(request):
-    '''Widok strony głównej aplikacji'''
+    '''Widok informacyjny'''
     return render(request, "about.html")
 
 
 def contactView(request):
-    '''Widok strony głównej aplikacji'''
+    '''Widok kontaktowy'''
     return render(request, "contact.html")
 
+
 def strategiesView(request):
-    '''Widok strony głównej aplikacji'''
+    '''Widok strategii'''
     return render(request, "strategies.html")
+
 
 def allView(request, type):
     '''Widok wszystkich spółek lub indeksów'''
 
     data = {
-        'spolki': Spolka.objects.filter(typ=type)
+        'spolki': Spolka.objects.filter(typ=type).order_by('skrot')
     }
 
     return render(request, "all.html", data)
@@ -46,7 +47,7 @@ def searchView(request):
     '''Widok strony wyszukiwania spółek'''
     if request.method == 'GET' and 'wyszukiwanie' in request.GET:
         nazwa = request.GET["wyszukiwanie"]
-        spolki = Spolka.objects.filter(typ=Spolka.SPOLKA)
+        spolki = Spolka.objects.filter(typ=Spolka.SPOLKA).order_by('skrot')
         spolki_do_temp = []
         for spolka in spolki:
             skrot = spolka.skrot.lower()
@@ -87,6 +88,7 @@ def companyFormView(request, comp_id):
 
     return render(request, "company_form.html", data)
 
+
 @require_POST
 def logoutView(request):
     url = request.POST["redirect"]
@@ -95,6 +97,7 @@ def logoutView(request):
 
 
 def loginView(request):
+    '''Widok logowania'''
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
