@@ -13,12 +13,19 @@ from stock_rogue_app.stock_rogue import run_stock_rogue_from_view
 from stock_rogue_app.forms import DaysStrategyForm, LoginForm
 from django.views.decorators.http import require_POST
 from django.contrib.auth import authenticate, login, logout
-from registration.views import RegistrationView
 
 def index(request):
     '''Widok strony głównej aplikacji'''
     return render(request, "main_site.html")
 
+
+def aboutView(request):
+    '''Widok strony głównej aplikacji'''
+    return render(request, "about.html")
+
+def strategiesView(request):
+    '''Widok strony głównej aplikacji'''
+    return render(request, "strategies.html")
 
 def allView(request, type):
     '''Widok wszystkich spółek lub indeksów'''
@@ -75,19 +82,6 @@ def companyFormView(request, comp_id):
 
     return render(request, "company_form.html", data)
 
-
-# def loginView(request):
-#    if request.method == "POST":
-#        user = authenticate(username=request.POST["username"], password=request.POST["password"])
-#        if user is not None:
-#            login(request, user)
-#            return HttpResponseRedirect("/")
-#        else:
-#            return HttpResponseForbidden("Bad username or password.")
-#    else:
-#        render_to_response("registration/login.html")
-
-
 @require_POST
 def logoutView(request):
     url = request.POST["redirect"]
@@ -108,5 +102,3 @@ def loginView(request):
     else:
         form = LoginForm()
         return render(request, "registration/login.html", locals())
-
-#RegistrationView
