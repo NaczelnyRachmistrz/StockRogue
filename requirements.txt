@@ -11,6 +11,7 @@ MarkupSafe==1.0
 nbformat==4.3.0
 packaging==16.8
 plotly==2.0.7
+psycopg2==2.7.1
 pyparsing==2.2.0
 python-dateutil==2.6.0
 pytz==2017.2
