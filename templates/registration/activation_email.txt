@@ -1,0 +1,5 @@
+Aktywuj konto na {{ site.name }}:
+
+http://{{ site.domain }}{% url 'registration_activate' activation_key %}
+
+Link będzie aktywny przez {{ expiration_days }} dni.

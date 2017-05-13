@@ -13,7 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
 
 from stock_rogue_app.views import index, companyView, companyFormView, searchView, allView, loginView, logoutView
@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^all/([A-Z]*)/$', allView, name='all_view'),
     url(r'^login/$', loginView, name='login'),
     url(r'^logout/$', logoutView, name='logout'),
-    url(r'^register/$', registerView, name='register'),
+    #url(r'^register/$', registerView, name='register'),
+    url(r'^accounts/', include('registration.backends.hmac.urls')),
     url(r'^admin/', admin.site.urls)
 ]

@@ -27,9 +27,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 
 # Application definition
-
 INSTALLED_APPS = [
     'stock_rogue_app.apps.StockRogueAppConfig',
     'django.contrib.admin',

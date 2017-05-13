@@ -1,0 +1,29 @@
+{% extends "super.html" %}
+{% block title %} - rejestracja {% endblock %}
+
+{% block head %}
+    {{ super() }}
+{% endblock %}
+<body>
+
+{% block navbar %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+    {{ super() }}
+
+    <div class="container-fluid">
+        <h4>Rejestracja zakończona</h4>
+        <p>Twoje konto jest aktywne.</p>
+        <p><a href="{% url 'auth_login' %}">Zaloguj</a></p>
+
+    </div>
+{% endblock %}
+
+
+{% block footer %}
+    {{ super() }}
+{% endblock %}
+
+</body>

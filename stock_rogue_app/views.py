@@ -13,7 +13,7 @@ from stock_rogue_app.stock_rogue import run_stock_rogue_from_view
 from stock_rogue_app.forms import DaysStrategyForm, LoginForm
 from django.views.decorators.http import require_POST
 from django.contrib.auth import authenticate, login, logout
-
+from registration.views import RegistrationView
 
 def index(request):
     '''Widok strony głównej aplikacji'''
@@ -109,4 +109,4 @@ def loginView(request):
         form = LoginForm()
         return render(request, "registration/login.html", locals())
 
-#def registerView(request):
+#RegistrationView
