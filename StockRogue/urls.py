@@ -29,7 +29,7 @@ urlpatterns = [
     url(r'^logout/$', logoutView, name='logout'),
     url(r'^accounts/', include('registration.backends.hmac.urls')),
     url(r'^strategies/$', strategiesView, name='strategies'),
-    url(r'^contact/$', contactView, name='strategies'),
+    url(r'^contact/$', contactView, name='contact'),
     url(r'^about/$', aboutView, name='about'),
     url(r'^admin/', admin.site.urls)
 ]

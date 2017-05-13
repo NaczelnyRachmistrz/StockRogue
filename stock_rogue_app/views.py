@@ -23,6 +23,11 @@ def aboutView(request):
     '''Widok strony głównej aplikacji'''
     return render(request, "about.html")
 
+
+def contactView(request):
+    '''Widok strony głównej aplikacji'''
+    return render(request, "contact.html")
+
 def strategiesView(request):
     '''Widok strony głównej aplikacji'''
     return render(request, "strategies.html")
