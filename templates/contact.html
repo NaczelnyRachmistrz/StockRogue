@@ -1,0 +1,60 @@
+{% extends "super.html" %}
+
+{% block title %} -- kontakt {% endblock %}
+
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+<body>
+
+{% block navbar %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+    {{ super() }}
+    <div class="container-fluid">
+        <div class="col-md-6">
+
+            <h3>
+                Aplikację tworzą
+            </h3>
+
+            <ul>
+                <li>Michał Kukuła</li>
+                <li>Mikołaj Leonarski</li>
+                <li>Marcin Michorzewski</li>
+                <li>Przemysław Perkowski</li>
+            </ul>
+
+            <p>
+                Na co dzień znajdziesz nas w murach wydziału MIM, zgłębiających tajniki programowania :)
+            </p>
+        </div>
+        <div class="col-md-6">
+
+            <h3>Skontaktuj się z nami!</h3>
+            <form role="form" action="" method="post">
+                {{ csrf_input }}
+                {{ form.as_p() }}
+                <button type="submit">Wyślij</button>
+            </form>
+
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    {{ super() }}
+{% endblock %}
+
+</body>

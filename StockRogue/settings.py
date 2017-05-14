@@ -29,9 +29,18 @@ ALLOWED_HOSTS = [
         'stockrogue.herokuapp.com',
 ]
 
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_USE_TLS = True
+    EMAIL_HOST = 'smtp.gmail.com'
+    EMAIL_PORT = 587
+    EMAIL_HOST_USER = 'stockrogueapp'
+    EMAIL_HOST_PASSWORD = 'GieldowyLotrApp'
+    DEFAULT_FROM_EMAIL = 'stockrogueapp@gmail.com'
+
+ACCOUNT_ACTIVATION_DAYS = 7
 
 # Application definition
-
 INSTALLED_APPS = [
     'stock_rogue_app.apps.StockRogueAppConfig',
     'django.contrib.admin',
@@ -40,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'registration'
 ]
 
 MIDDLEWARE = [
