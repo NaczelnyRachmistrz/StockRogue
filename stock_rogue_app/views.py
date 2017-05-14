@@ -1,17 +1,19 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.http import HttpResponseRedirect, HttpResponseForbidden
+from django.http import HttpResponseRedirect, HttpResponseForbidden, HttpResponse
 
 from stock_rogue_app.models import Spolka
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.csrf import csrf_exempt
 
 from stock_rogue_app.stock_rogue import run_stock_rogue_from_view
-from stock_rogue_app.forms import DaysStrategyForm, LoginForm
+from stock_rogue_app.forms import DaysStrategyForm, LoginForm, ContactForm
 from django.views.decorators.http import require_POST
 from django.contrib.auth import authenticate, login, logout
-
+from django.core.mail import EmailMessage, send_mail
+from django.conf import settings
+from django.contrib import messages
 
 def index(request):
     '''Widok strony głównej'''
@@ -25,7 +27,25 @@ def aboutView(request):
 
 def contactView(request):
     '''Widok kontaktowy'''
-    return render(request, "contact.html")
+    form_class = ContactForm
+
+    if request.method == 'POST':
+        form = form_class(data=request.POST)
+        if form.is_valid():
+            contact_name = request.POST.get('contact_name', '')
+            contact_email = request.POST.get('contact_email', '')
+            form_content = request.POST.get('content', '')
+            app_email = getattr(settings, 'DEFAULT_FROM_EMAIL')
+            send_mail(
+                'Kontakt',
+                form_content,
+                contact_email,
+                [app_email],
+                fail_silently=True,
+            )
+            messages.add_message(request, messages.SUCCESS, 'Dziękujemy za skontaktowanie się z nami.')
+            HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    return render(request, 'contact.html', {'form': form_class() })
 
 
 def strategiesView(request):
