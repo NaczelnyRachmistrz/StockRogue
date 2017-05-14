@@ -14,10 +14,12 @@ from django.contrib.auth import authenticate, login, logout
 
 
 def index(request):
+    '''Widok strony głównej'''
     return render(request, "main_site.html")
 
 
 def aboutView(request):
+    '''Widok informacji o aplikacji'''
     return render(request, "about.html")
 
 
