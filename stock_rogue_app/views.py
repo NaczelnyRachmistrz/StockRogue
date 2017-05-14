@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.http import HttpResponseRedirect, HttpResponseForbidden, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponseForbidden
 
 from stock_rogue_app.models import Spolka
 from django.shortcuts import get_object_or_404, render
@@ -11,7 +11,7 @@ from stock_rogue_app.stock_rogue import run_stock_rogue_from_view
 from stock_rogue_app.forms import DaysStrategyForm, LoginForm, ContactForm
 from django.views.decorators.http import require_POST
 from django.contrib.auth import authenticate, login, logout
-from django.core.mail import EmailMessage, send_mail
+from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib import messages
 
