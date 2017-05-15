@@ -25,11 +25,22 @@ SECRET_KEY = 'p36xzs4ji1ly+f+mymi+0ntfqk-8%qrdihrthl$js-2*ub-u60'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+        'stockrogue.herokuapp.com',
+]
 
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_USE_TLS = True
+    EMAIL_HOST = 'smtp.gmail.com'
+    EMAIL_PORT = 587
+    EMAIL_HOST_USER = 'stockrogueapp'
+    EMAIL_HOST_PASSWORD = 'GieldowyLotrApp'
+    DEFAULT_FROM_EMAIL = 'stockrogueapp@gmail.com'
+
+ACCOUNT_ACTIVATION_DAYS = 7
 
 # Application definition
-
 INSTALLED_APPS = [
     'stock_rogue_app.apps.StockRogueAppConfig',
     'django.contrib.admin',
@@ -38,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'registration'
 ]
 
 MIDDLEWARE = [
@@ -77,12 +89,24 @@ WSGI_APPLICATION = 'StockRogue.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+
+"""
+Kiedyś
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+"""
+
+#Hemoku
+import dj_database_url
+db_from_env = dj_database_url.config()
+DATABASES = {
+        'default' : {}
+}
+DATABASES['default'].update(db_from_env)
 
 
 # Password validation
@@ -121,7 +145,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.9/howto/static-files/
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+# Extra places for collectstatic to find static files.
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'

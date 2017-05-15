@@ -1,0 +1,33 @@
+{% extends "super.html" %}
+
+{% block title %} - wyszukaj spółkę {% endblock %}
+
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+<body>
+
+{% block navbar %}
+    {{ super() }}
+{% endblock %}
+
+
+{% block content %}
+    {{ super() }}
+    <div class="container-fluid">
+        {% if not request.user.is_authenticated %}
+            <form method="post" action="/login/">
+                {{ csrf_input }}
+                {{ form.as_p() }}
+                <input type="submit" value="Zaloguj">
+            </form>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block footer %}
+    {{ super() }}
+{% endblock %}
+
+</body>

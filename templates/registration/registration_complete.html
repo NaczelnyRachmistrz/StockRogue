@@ -1,0 +1,29 @@
+{% extends "super.html" %}
+{% block title %} - rejestracja {% endblock %}
+
+{% block head %}
+    {{ super() }}
+{% endblock %}
+<body>
+
+{% block navbar %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+    {{ super() }}
+
+    <div class="container-fluid">
+        <h3>Email aktywacyjny wysłany</h3>
+        <p>Pozostał jeszcze jeden krok. Link aktywacyjny został wysłany na podany adres mailowy.
+            Proszę, otwórz go i kliknij na link, aby zakończyć rejestrację.</p>
+
+    </div>
+{% endblock %}
+
+
+{% block footer %}
+    {{ super() }}
+{% endblock %}
+
+</body>

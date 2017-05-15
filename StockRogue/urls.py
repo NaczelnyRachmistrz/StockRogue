@@ -13,16 +13,23 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
 
-from stock_rogue_app.views import index, companyView, companyFormView, searchView, allView
+from stock_rogue_app.views import index, companyView, companyFormView, searchView, allView, loginView, logoutView, \
+    strategiesView, aboutView, contactView
 
 urlpatterns = [
     url(r'^$', index, name='index'),
-    url(r'^company/(?P<comp_id>[0-9]+)/$', companyView, name='company'),
-    url(r'^company_form/(?P<comp_id>[0-9]+)/$', companyFormView, name='company_form'),
+    url(r'^company/([0-9]+)/$', companyView, name='company'),
+    url(r'^company_form/([0-9]+)/$', companyFormView, name='company_form'),
     url(r'^search/', searchView, name='search_view'),
-    url(r'^all/(?P<type>[A-Z]*)/$', allView, name='all_view'),
+    url(r'^all/([A-Z]*)/$', allView, name='all_view'),
+    url(r'^login/$', loginView, name='login'),
+    url(r'^logout/$', logoutView, name='logout'),
+    url(r'^accounts/', include('registration.backends.hmac.urls')),
+    url(r'^strategies/$', strategiesView, name='strategies'),
+    url(r'^contact/$', contactView, name='contact'),
+    url(r'^about/$', aboutView, name='about'),
     url(r'^admin/', admin.site.urls)
 ]

@@ -1,17 +1,14 @@
 {% extends "super.html" %}
 
 {% block title %} - wybrano spółkę {{ id }} {% endblock %}
-
 {% block head %}
     {{ super() }}
 {% endblock %}
-
 <body>
 
 {% block navbar %}
     {{ super() }}
 {% endblock %}
-
 {% block content %}
     <div class="container-fluid">
         <h1 style="margin-top: 70px">Notowania spółki {{ skrot }}</h1>
