@@ -15,7 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-
+from django.conf import settings
+from django.contrib.staticfiles import views
 from stock_rogue_app.views import index, companyView, companyFormView, searchView, allView, loginView, logoutView, \
     strategiesView, aboutView, contactView
 
@@ -33,3 +34,8 @@ urlpatterns = [
     url(r'^about/$', aboutView, name='about'),
     url(r'^admin/', admin.site.urls)
 ]
+
+if settings.DEBUG:
+    urlpatterns += [
+        url(r'^static/(?P<path>.*)$', views.serve),
+    ]
