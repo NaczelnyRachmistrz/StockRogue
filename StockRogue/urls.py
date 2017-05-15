@@ -32,10 +32,10 @@ urlpatterns = [
     url(r'^strategies/$', strategiesView, name='strategies'),
     url(r'^contact/$', contactView, name='contact'),
     url(r'^about/$', aboutView, name='about'),
-    url(r'^admin/', admin.site.urls)
+    url(r'^admin/', admin.site.urls),
+    url(r'^static/(?P<path>.*)$', views.serve),
 ]
 
 if settings.DEBUG:
     urlpatterns += [
-        url(r'^static/(?P<path>.*)$', views.serve),
     ]
