@@ -24,3 +24,5 @@ def update_data():
                 "kurs_min": float(row[4]), "kurs_biezacy": float(row[5]), "obrot": float(row[6])} for row in my_list]
         print("zwracamy do bazy danych...")
         return today_data
+
+

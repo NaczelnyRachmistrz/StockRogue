@@ -4,6 +4,30 @@ from stock_rogue_app.models import Dane, Spolka
 import os
 import csv
 from dateutil import parser
+from StockRogue.downloader import update_data
+
+def companies_and_indexes_names():
+    all = update_data()
+    companies = []
+    indexes = []
+
+    for position in all:
+        if position['nazwa'].__contains__('WIG'):
+            indexes.append(position['nazwa'])
+        else:
+            companies.append(position['nazwa'])
+
+    return companies, indexes
+
+
+def choose_type(name, companies, indexes):
+    if name in companies:
+        return Spolka.SPOLKA
+    elif name in indexes:
+        return Spolka.INDEKS
+    else:
+        return Spolka.INNE
+
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
@@ -11,6 +35,9 @@ class Command(BaseCommand):
 
         # Folder z archiwalnymi notowaniami giełdowymi.
         path = os.path.join(settings.BASE_DIR, "data", "spolki")
+
+        # Pobieramy listę spółek i indeksów
+        companies, indexes = companies_and_indexes_names()
 
         for company in os.listdir(path):
             with open(os.path.join(path, company), newline='') as csvfile:
@@ -22,7 +49,7 @@ class Command(BaseCommand):
                             print(row[0] + " " + row[1])
 
                             s, created = Spolka.objects.get_or_create(
-                             skrot=row[0]
+                             skrot=row[0], typ=choose_type(row[0], companies, indexes)
                             )
 
                             insert_list.append(Dane(

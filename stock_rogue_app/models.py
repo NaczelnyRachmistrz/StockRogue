@@ -26,6 +26,10 @@ class Spolka(models.Model):
         default=INNE
     )
 
+    def __str__(self):
+        return str(self.typ) + " : " + str(self.skrot)
+
+
 class Dane(models.Model):
     '''Model reprezentujący dane o spółce z wybranego dnia.'''
 
