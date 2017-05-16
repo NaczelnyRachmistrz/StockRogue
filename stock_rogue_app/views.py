@@ -32,12 +32,12 @@ def contactView(request):
     if request.method == 'POST':
         form = form_class(data=request.POST)
         if form.is_valid():
-            contact_name = request.POST.get('contact_name', '')
-            contact_email = request.POST.get('contact_email', '')
-            form_content = request.POST.get('content', '')
+            contact_name = request.POST['contact_name']
+            contact_email = request.POST['contact_email']
+            form_content = request.POST['content']
             app_email = getattr(settings, 'DEFAULT_FROM_EMAIL')
             send_mail(
-                'Kontakt',
+                "Kontakt od" + contact_name,
                 form_content,
                 contact_email,
                 [app_email],
