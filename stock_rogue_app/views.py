@@ -39,7 +39,7 @@ def contactView(request):
             app_email = getattr(settings, 'DEFAULT_FROM_EMAIL')
             send_mail(
                 "Kontakt od użytkownika " + contact_name,
-                "Wiadomość z maila " + contact_email + ":\n\n" +  form_content,
+                "Wiadomość z maila " + contact_email + ":" + "\n" + form_content,
                 contact_email,
                 [app_email],
                 fail_silently=True,
