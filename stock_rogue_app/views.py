@@ -38,13 +38,13 @@ def contactView(request):
             form_content = request.POST['content']
             app_email = getattr(settings, 'DEFAULT_FROM_EMAIL')
             send_mail(
-                "Kontakt od użytkownika " + contact_name,
-                "Wiadomość z maila " + contact_email + ":" + "\n" + form_content,
+                'Kontakt od użytkownika ' + contact_name,
+                'Wiadomość z maila ' + contact_email + ':' + '\n' + form_content,
                 contact_email,
                 [app_email],
                 fail_silently=True,
             )
-        messages.add_message(request, messages.SUCCESS, 'Dziękujemy za skontaktowanie się z nami.')
+        messages.add_message(request, messages.SUCCESS, 'Dziękujemy za kontakt!')
         HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
     return render(request, 'contact.html', {'form': form_class()})
