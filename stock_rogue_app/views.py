@@ -15,6 +15,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib import messages
 
+
 def index(request):
     '''Widok strony głównej'''
     return render(request, "main_site.html")
@@ -37,15 +38,16 @@ def contactView(request):
             form_content = request.POST['content']
             app_email = getattr(settings, 'DEFAULT_FROM_EMAIL')
             send_mail(
-                "Kontakt od" + contact_name,
-                form_content,
+                "Kontakt od użytkownika " + contact_name,
+                "Wiadomość z maila " + contact_email + form_content,
                 contact_email,
                 [app_email],
                 fail_silently=True,
             )
-            messages.add_message(request, messages.SUCCESS, 'Dziękujemy za skontaktowanie się z nami.')
-            HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-    return render(request, 'contact.html', {'form': form_class() })
+        messages.add_message(request, messages.SUCCESS, 'Dziękujemy za skontaktowanie się z nami.')
+        HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+    return render(request, 'contact.html', {'form': form_class()})
 
 
 def strategiesView(request):

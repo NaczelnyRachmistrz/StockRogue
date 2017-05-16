@@ -36,6 +36,7 @@ class LoginForm(forms.Form):
             raise forms.ValidationError("Niepoprawne hasło")
         raise forms.ValidationError("Niepoprawny login")
 
+
 class ContactForm(forms.Form):
     contact_name = forms.CharField(required=True, label='Przedstaw się')
     contact_email = forms.EmailField(required=True, label='Podaj e-mail na który będziemy mogli Ci odpisać')
