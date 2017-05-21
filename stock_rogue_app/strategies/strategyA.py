@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Predicts the future average name value where name value is in ['max_value', 'min_value',
 # 'stock_price']
 from stock_rogue_app.strategies.StrategyDataContainers import StrategyData
