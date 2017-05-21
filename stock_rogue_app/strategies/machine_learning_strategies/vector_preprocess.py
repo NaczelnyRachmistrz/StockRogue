@@ -4,6 +4,8 @@
    machine learningowych. Odpowiedzialne m. in. za wektoryzację danych'''
 
 
+# Pomocnicze funkcje do obliczania procentowej zmiany kursu
+
 def percentage_change(prev_value, curr_value):
     '''Zwraca procentową zmianę kursu'''
 
@@ -33,6 +35,34 @@ def percentage_change_days(stock_dict, field, days_past_vec, value):
 
     return value_changes
 
+# Pomocnicze funkcje zapisujące nie procentowe zmiany, tylko po
+# kursy sprzed odpowiedniej liczby dni
+
+def change_dict(stock_dict, field, days_past):
+    '''Zwraca wektor kursów sprzed days_past dni'''
+
+    def index_oor_handle(i):
+        return min(len(stock_dict) - 1, i + days_past)
+
+    old_values_list = [stock_dict[index_oor_handle(i)][field]
+                       for i in range(max(-days_past, 1), len(stock_dict))]
+
+    return old_values_list
+
+def change_days(stock_dict, field, days_past_vec):
+    '''Zwraca wektor kursow sprzed wszystkich dni w days_past_vec'''
+
+    def index_oor_handle(days_past):
+        return min(len(stock_dict) - 1, days_past)
+
+    value_changes = [stock_dict[index_oor_handle(days)][field]
+                     for days in days_past_vec]
+
+    return value_changes
+
+
+# Funkcje zwracające training set
+
 def vectorize_data(stock_dict, days_list, field):
     '''Funkcja przygotowująca macierz dla tablicy słowników
         z danymi giełdowymi stock_dict, wymiaru liczba dni x len(days_list)'''
@@ -51,3 +81,18 @@ def vectorize_data(stock_dict, days_list, field):
 
 
 
+def raw_vectorize_data(stock_dict, days_list, field):
+    '''Funkcja przygotowująca macierz dla tablicy słowników
+            z danymi giełdowymi stock_dict, wymiaru liczba dni x len(days_list),
+            nie zapisuje procentowej zmiany, tylko archiwalne ceny kursów'''
+
+    y_vector = change_dict(stock_dict, field, -1)
+
+    X_matrix = [[] for el in stock_dict[:-1]]
+    for day in days_list:
+        changes = change_dict(stock_dict, field, day)
+
+        for i in range(len(stock_dict[:-1])):
+            X_matrix[i] += [changes[i]]
+
+    return (X_matrix, y_vector)
