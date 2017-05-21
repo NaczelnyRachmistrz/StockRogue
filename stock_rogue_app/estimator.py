@@ -6,6 +6,7 @@ from stock_rogue_app.strategies import strategyB
 from stock_rogue_app.strategies import strategyC
 from stock_rogue_app.strategies import strategyD
 from stock_rogue_app.strategies.futureDataGenerator import generate_future_data
+from stock_rogue_app.strategies.machine_learning_strategies import strategy_linear_regression
 
 # Zakladam, ze company_data zawiera tylko spolke company_name + company_data
 # jest posortowane malejaco po datach, tzn. od najwczesniejszej do najpozniejszej.
@@ -41,7 +42,12 @@ def estimate_values(comp_id, predict_interval, strategy, company_data):
                                                  number_of_past_days,
                                                  company_data,
                                                  result)
-    # strategyC
+
+    elif strategy == 'E':
+        future_values = strategy_linear_regression.predict_future(company_data = company_data,
+                                                                  result = result)
+
+    # CZEMU C AKURAT? XD
     else:
         future_values = strategyC.predict_future(comp_id,
                                                  number_of_past_days,
