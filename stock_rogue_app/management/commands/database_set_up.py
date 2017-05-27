@@ -1,5 +1,5 @@
-from django.conf import settings
 from django.core.management.base import BaseCommand
+from StockRogue.settings import BASE_DIR
 from stock_rogue_app.models import Dane, Spolka
 import os
 import csv
@@ -34,7 +34,7 @@ class Command(BaseCommand):
         '''Wypełnia bazę danych danymi od 2010 roku.'''
 
         # Folder z archiwalnymi notowaniami giełdowymi.
-        path = os.path.join(settings.BASE_DIR, "data", "spolki")
+        path = os.path.join(BASE_DIR, "data", "spolki")
 
         # Pobieramy listę spółek i indeksów
         companies, indexes = companies_and_indexes_names()
