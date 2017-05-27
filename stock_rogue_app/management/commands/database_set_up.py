@@ -53,6 +53,7 @@ class Command(BaseCommand):
                              skrot=row[0], typ=choose_type(row[0], companies, indexes)
                             )
 
+                            print("wczytuję" + row[0] + " " + row[1])
                             Dane.objects.create(
                                 spolka=s,
                                 kurs_otwarcia=float(row[2]),
