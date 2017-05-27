@@ -31,7 +31,7 @@ def choose_type(name, companies, indexes):
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        '''Wypełnia bazę danych danymi od 2010 roku.'''
+        '''Wypełnia bazę danych danymi od 2016 roku.'''
 
         # Folder z archiwalnymi notowaniami giełdowymi.
         path = os.path.join(BASE_DIR, "data", "spolki")
