@@ -47,12 +47,23 @@ class Command(BaseCommand):
                     if row[0] != "<TICKER>":
                         #Pobieramy notowania spółek od 22 maja 2017 roku
                         if int(row[1]) > 20170521:
-                            print(row[0] + " " + row[1])
+
 
                             s, created = Spolka.objects.get_or_create(
                              skrot=row[0], typ=choose_type(row[0], companies, indexes)
                             )
 
+                            Dane.objects.create(
+                                spolka=s,
+                                kurs_otwarcia=float(row[2]),
+                                data=parser.parse(row[1]),
+                                kurs_max=float(row[3]),
+                                kurs_min=float(row[4]),
+                                kurs_biezacy=float(row[5]),
+                                obrot=float(row[6])
+                            )
+
+                            """
                             insert_list.append(Dane(
                                 spolka=s,
                                 kurs_otwarcia=float(row[2]),
@@ -63,3 +74,4 @@ class Command(BaseCommand):
                                 obrot=float(row[6]))
                             )
                 Dane.objects.bulk_create(insert_list)
+                            """
