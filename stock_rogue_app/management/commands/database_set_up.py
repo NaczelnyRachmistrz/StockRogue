@@ -45,8 +45,8 @@ class Command(BaseCommand):
                 insert_list = []
                 for row in reader:
                     if row[0] != "<TICKER>":
-                        #Pobieramy notowania spółek od 1 kwietnia 2017 roku
-                        if int(row[1]) > 20170400:
+                        #Pobieramy notowania spółek od 22 maja 2017 roku
+                        if int(row[1]) > 20170521:
                             print(row[0] + " " + row[1])
 
                             s, created = Spolka.objects.get_or_create(
