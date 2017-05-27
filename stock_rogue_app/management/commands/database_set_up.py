@@ -31,7 +31,7 @@ def choose_type(name, companies, indexes):
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        '''Wypełnia bazę danych danymi od 2016 roku.'''
+        '''Wypełnia bazę danych danymi od 2017 roku.'''
 
         # Folder z archiwalnymi notowaniami giełdowymi.
         path = os.path.join(BASE_DIR, "data", "spolki")
@@ -45,8 +45,8 @@ class Command(BaseCommand):
                 insert_list = []
                 for row in reader:
                     if row[0] != "<TICKER>":
-                        #Pobieramy notowania spółek od 1 stycznia 2016 roku
-                        if int(row[1]) > 2016 * 100 * 100:
+                        #Pobieramy notowania spółek od 1 stycznia 2017 roku
+                        if int(row[1]) > 2017 * 100 * 100:
                             print(row[0] + " " + row[1])
 
                             s, created = Spolka.objects.get_or_create(
