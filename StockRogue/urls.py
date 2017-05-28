@@ -17,13 +17,14 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from stock_rogue_app.views import index, companyView, companyFormView, searchView, allView, loginView, logoutView, \
-    strategiesView, aboutView, contactView
+    strategiesView, aboutView, contactView, gameView
 
 urlpatterns = [
     url(r'^$', index, name='index'),
     url(r'^company/([0-9]+)/$', companyView, name='company'),
     url(r'^company_form/([0-9]+)/$', companyFormView, name='company_form'),
     url(r'^search/', searchView, name='search_view'),
+    url(r'^game/', gameView, name='game_view'),
     url(r'^all/([A-Z]*)/$', allView, name='all_view'),
     url(r'^login/$', loginView, name='login'),
     url(r'^logout/$', logoutView, name='logout'),
