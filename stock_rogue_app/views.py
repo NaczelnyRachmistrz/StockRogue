@@ -55,6 +55,14 @@ def strategiesView(request):
     return render(request, "strategies.html")
 
 
+def gameView(request):
+    '''Widok gry'''
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect("/");
+    return render(request, "game.html")
+
+
+
 def allView(request, type):
     '''Widok wszystkich spółek lub indeksów'''
 
