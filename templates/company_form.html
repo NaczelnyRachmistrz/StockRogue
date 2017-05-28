@@ -2,24 +2,25 @@
 
 {% block title %} - wybrano spółkę {{ id }} {% endblock %}
 {% block head %}
-  {{ super() }}
+    {{ super() }}
 {% endblock %}
 <body>
 
 {% block navbar %}
-   {{ super() }}
+    {{ super() }}
 {% endblock %}
 {% block content %}
     {{ super() }}
     <h1 class="head" style="margin-top: 70px">Wykres dla spółki {{ skrot }}</h1>
     <div class="container">
-    <section id="form">
-        <form action="{{url('company', args=[id])}}" method="get">
-          {{ form }}
-          <input type="submit" value="OK">
-      </form>
-    </section>
-</div>
+        <section id="form">
+            <form action="{{ url('company', args=[id]) }}" method="get">
+                {{ csrf_input() }}
+                {{ form }}
+                <input type="submit" value="OK">
+            </form>
+        </section>
+    </div>
 {% endblock %}
 
 {% block footer %}

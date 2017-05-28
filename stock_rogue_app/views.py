@@ -79,7 +79,7 @@ def searchView(request):
     return render(request, "search.html", data)
 
 
-@csrf_exempt
+#@csrf_exempt
 def companyView(request, comp_id):
     '''Widok wykresu wybranej spółki'''
 
