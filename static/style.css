@@ -35,3 +35,7 @@ footer .glyphicon {
         text-align: center;
     }
 }
+
+.carousel-control {
+    max-height: 500px; !important
+}
