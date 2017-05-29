@@ -18,9 +18,15 @@ DEFAULT_TABLE_SMALL = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12,
 
 DEFAULT_TABLE_MINIMUM = (0, 1, 2, 3, 4, 5, 7, 9, 11, 13, 15)
 
-def default_table_picker(company_data):
+DEFAULT_TABLE_POLY = (0, 1, 2, 3, 4, 5, 10, 30, 60, 180, 360)
+
+def default_table_picker(company_data, poly_reg=False):
     '''Wybiera domyślną tablicę w zależności od liczby rekordów
      danej spółki'''
+
+    if poly_reg:
+        return DEFAULT_TABLE_POLY
+
     if len(company_data) < 100:
         return DEFAULT_TABLE_MINIMUM
     if len(company_data) < 250:
