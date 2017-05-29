@@ -9,7 +9,8 @@ class DaysStrategyForm(forms.Form):
     '''Formularz do wyboru strategii i liczby dni, na jakie przewidujemy.'''
 
     CHOICES = (('A', 'Main'), ('B', 'Naive'), ('C', 'Stable'), ('D', 'Average'),
-               ('E', 'Linear Regression'))
+               ('E', 'Linear Regression'), ('F', 'Polynomial Regression'),
+               ('G', 'Huber Regression'))
     strategia = forms.ChoiceField(label='Strategia:', choices=CHOICES, required=True)
     ile_dni = forms.IntegerField(label='Liczba dni:', min_value=0, max_value=30, required=True)
 

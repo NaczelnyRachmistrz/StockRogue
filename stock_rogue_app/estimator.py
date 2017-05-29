@@ -47,6 +47,21 @@ def estimate_values(comp_id, predict_interval, strategy, company_data):
         future_values = strategy_linear_regression.predict_future(company_data = company_data,
                                                                   result = result)
 
+    elif strategy == 'F':
+        table = auxiliary_functions.default_table_picker(company_data,
+                                                         True)
+
+        future_values = strategy_linear_regression.predict_future(company_data=company_data,
+                                                                  result=result,
+                                                                  days_past=table,
+                                                                  poly_reg=True)
+
+    elif strategy == 'G':
+        table = auxiliary_functions.default_table_picker(company_data, True)
+        future_values = strategy_linear_regression.predict_future(company_data=company_data,
+                                                                  result=result,
+                                                                  days_past=table,
+                                                                  huber_reg=True)
     # CZEMU C AKURAT? XD
     else:
         future_values = strategyC.predict_future(comp_id,
