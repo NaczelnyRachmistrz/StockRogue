@@ -90,9 +90,10 @@ def companyView(request, comp_id):
 
     spolka = get_object_or_404(Spolka, id=comp_id)
 
-    run_stock_rogue_from_view(spolka.skrot, int(request.GET["ile_dni"]), request.GET["strategia"])
+    plot_div = run_stock_rogue_from_view(spolka.skrot, int(request.GET["ile_dni"]), request.GET["strategia"])
 
     data = spolka.__dict__
+    data["plot_div"] = plot_div
 
     return render(request, "company.html", data)
 

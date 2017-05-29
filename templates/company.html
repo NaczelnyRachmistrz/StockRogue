@@ -3,6 +3,7 @@
 {% block title %} - wybrano spółkę {{ id }} {% endblock %}
 {% block head %}
     {{ super() }}
+    <script src="/static/plotly-latest.min.js"></script>
 {% endblock %}
 <body>
 
@@ -18,7 +19,7 @@
         </nav>
 
         <main>
-            {% include skrot + '.html' %}
+            {{ plot_div|safe}}
         </main>
     </div>
 {% endblock %}
