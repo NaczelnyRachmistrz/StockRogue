@@ -17,7 +17,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 from stock_rogue_app.views import index, companyView, companyFormView, searchView, allView, loginView, logoutView, \
-    strategiesView, aboutView, contactView
+    strategiesView, aboutView, contactView, compareView
 
 urlpatterns = [
     url(r'^$', index, name='index'),
@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^logout/$', logoutView, name='logout'),
     url(r'^accounts/', include('registration.backends.hmac.urls')),
     url(r'^strategies/$', strategiesView, name='strategies'),
+    url(r'^compare/(?P<strategy>[A-Z])/$', compareView, name='compare'),
     url(r'^contact/$', contactView, name='contact'),
     url(r'^about/$', aboutView, name='about'),
     url(r'^admin/', admin.site.urls)

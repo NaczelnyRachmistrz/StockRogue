@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.http import HttpResponseRedirect, HttpResponseForbidden
+from django.http import HttpResponseRedirect, HttpResponseForbidden, HttpResponse
 
 from stock_rogue_app.models import Spolka
 from django.shortcuts import get_object_or_404, render
@@ -47,6 +47,8 @@ def contactView(request):
             HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     return render(request, 'contact.html', {'form': form_class() })
 
+def compareView(request, strategy):
+    return HttpResponse("XD")
 
 def strategiesView(request):
     '''Widok strategii'''

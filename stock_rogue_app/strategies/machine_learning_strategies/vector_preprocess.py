@@ -2,8 +2,8 @@
 
 '''Szereg funkcji preprocessingowych dla strategii korzystających z algorytmów
    machine learningowych. Odpowiedzialne m. in. za wektoryzację danych'''
-
-
+from .auxiliary_functions import collect_wig_data
+from sklearn.preprocessing import PolynomialFeatures
 # Pomocnicze funkcje do obliczania procentowej zmiany kursu
 
 def percentage_change(prev_value, curr_value):
@@ -96,3 +96,41 @@ def raw_vectorize_data(stock_dict, days_list, field):
             X_matrix[i] += [changes[i]]
 
     return (X_matrix, y_vector)
+
+def prepare_data(company_data, days_past, wig_data=True, poly_reg=False):
+    "Funkcja przygotowująca dane do formy wymaganej przez modele machine learningowe"
+
+    FIELDS = ("kurs_min", "kurs_max", "kurs_biezacy")
+    X_matrix = {}
+    y_vector = {}
+    lin_model = {}
+
+    company_data_copy = list(company_data)
+
+    for el in FIELDS:
+        X_matrix[el], y_vector[el] = vectorize_data(company_data,
+                                                    days_past,
+                                                    el)
+
+    if wig_data:
+        X_matrix_wig = {}
+        y_vector_wig = {}
+        wig = collect_wig_data()
+        for el in FIELDS:
+            X_matrix_wig[el], y_vector_wig[el] = vectorize_data(wig,
+                                                                days_past,
+                                                                el)
+
+            X_matrix[el] += X_matrix_wig[el]
+            y_vector[el] += y_vector_wig[el]
+
+    X_matrix_combined = [X_matrix[FIELDS[0]][i] +
+                         X_matrix[FIELDS[1]][i] +
+                         X_matrix[FIELDS[2]][i]
+                         for i in range(len(X_matrix[FIELDS[0]]))]
+
+    if poly_reg:
+        poly = PolynomialFeatures(2)
+        poly.fit_transform(X_matrix_combined)
+
+    return (X_matrix_combined, y_vector)

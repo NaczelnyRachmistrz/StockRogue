@@ -9,47 +9,23 @@ from . import auxiliary_functions
 
 def predict_future(company_data, result, days_past,
                    wig_data=True, poly_reg=False, huber_reg=False):
-    '''Prosta strategia wykorzystująca regresję liniową. Przyjmuje za czynniki
+    '''Strategia wykorzystująca różne techniki regresji liniowej. Przyjmuje za czynniki
         zmiany kursu w stosunku do wartości sprzed liczby dni podanych w tablicy days_past'''
 
-    FIELDS = ("kurs_min", "kurs_max", "kurs_biezacy")
-    X_matrix = {}
-    y_vector = {}
     lin_model = {}
+
+    FIELDS = ("kurs_min", "kurs_max", "kurs_biezacy")
+    X_matrix_combined, y_vector = vector_preprocess.prepare_data(company_data,
+                                                                 days_past,
+                                                                 wig_data,
+                                                                 poly_reg)
 
     company_data_copy = list(company_data)
 
     for el in FIELDS:
-        X_matrix[el], y_vector[el] = vector_preprocess.vectorize_data(company_data,
-                                                                      days_past,
-                                                                      el)
-
         lin_model[el] = linear_model.HuberRegressor() \
                         if huber_reg else linear_model.LinearRegression()
 
-
-    if wig_data:
-        X_matrix_wig = {}
-        y_vector_wig = {}
-        wig = auxiliary_functions.collect_wig_data()
-        for el in FIELDS:
-            X_matrix_wig[el], y_vector_wig[el] = vector_preprocess.vectorize_data(wig,
-                                                             days_past,
-                                                             el)
-
-            X_matrix[el] += X_matrix_wig[el]
-            y_vector[el] += y_vector_wig[el]
-
-    X_matrix_combined = [X_matrix[FIELDS[0]][i] +
-                         X_matrix[FIELDS[1]][i] +
-                         X_matrix[FIELDS[2]][i]
-                         for i in range(len(X_matrix[FIELDS[0]]))]
-
-    if poly_reg:
-        poly = PolynomialFeatures(2)
-        poly.fit_transform(X_matrix_combined)
-
-    for el in FIELDS:
         lin_model[el].fit(X_matrix_combined,
                           y_vector[el])
 
