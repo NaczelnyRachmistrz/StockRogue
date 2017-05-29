@@ -54,6 +54,7 @@ class Command(BaseCommand):
                             )
 
                             print("wczytuję" + row[0] + " " + row[1])
+                            """
                             Dane.objects.create(
                                 spolka=s,
                                 kurs_otwarcia=float(row[2]),
@@ -75,4 +76,3 @@ class Command(BaseCommand):
                                 obrot=float(row[6]))
                             )
                 Dane.objects.bulk_create(insert_list)
-                            """

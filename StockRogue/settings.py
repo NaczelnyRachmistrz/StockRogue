@@ -25,7 +25,7 @@ SECRET_KEY = 'p36xzs4ji1ly+f+mymi+0ntfqk-8%qrdihrthl$js-2*ub-u60'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-        'stockrogue.herokuapp.com',
+    '127.0.0.1'
 ]
 
 if DEBUG:
@@ -84,29 +84,27 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'StockRogue.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 
-"""
-Kiedyś
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-"""
 
-#Hemoku
+# Hemoku
+'''
 import dj_database_url
+
 db_from_env = dj_database_url.config()
 DATABASES = {
-        'default' : {}
+    'default': {}
 }
 DATABASES['default'].update(db_from_env)
-
+'''
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -125,7 +123,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
@@ -152,9 +149,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
 # Extra places for collectstatic to find static files.
-#STATICFILES_DIRS = (
+# STATICFILES_DIRS = (
 #    os.path.join(BASE_DIR, 'static'),
-#)
+# )
 
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
-
+#STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
