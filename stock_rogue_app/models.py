@@ -52,7 +52,7 @@ class Dane(models.Model):
 class Player(models.Model):
     '''Model reprezentujący dane zarejestrowanego użytkownika.'''
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    money = models.FloatField()
+    money = models.FloatField(default=0)
 
     '''Pamiętamy 5 ostatnich spółek którymi zajmował się gracz'''
     last_played_company1 = models.ForeignKey('Spolka', on_delete=models.SET_NULL,

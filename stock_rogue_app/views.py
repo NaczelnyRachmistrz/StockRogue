@@ -3,12 +3,12 @@ from __future__ import unicode_literals
 
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 
-from stock_rogue_app.models import Spolka
+from stock_rogue_app.models import Spolka, Player
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.csrf import csrf_exempt
 
 from stock_rogue_app.stock_rogue import run_stock_rogue_from_view
-from stock_rogue_app.forms import DaysStrategyForm, LoginForm, ContactForm
+from stock_rogue_app.forms import DaysStrategyForm, LoginForm, ContactForm, MoneyOperationForm
 from django.views.decorators.http import require_POST
 from django.contrib.auth import authenticate, login, logout
 from django.core.mail import send_mail
@@ -58,9 +58,30 @@ def strategiesView(request):
 def gameView(request):
     '''Widok gry'''
     if not request.user.is_authenticated:
-        return HttpResponseRedirect("/");
-    return render(request, "game.html")
+        return HttpResponseRedirect("/")
 
+    player, created = Player.objects.get_or_create(
+        user=request.user)
+
+    form_class = MoneyOperationForm
+
+    if request.method == 'POST':
+        form = form_class(data=request.POST)
+        if form.is_valid():
+            type = request.POST['type']
+            value = float(request.POST['value'])
+            if (type == 'Wypłata'):
+                value = (-1) * value
+            player.money += value
+            player.save()
+        HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+    data = {
+        'username': request.user.username,
+        'money': player.money,
+        'form': form_class()
+    }
+    return render(request, "game.html", data)
 
 
 def allView(request, type):
@@ -87,7 +108,7 @@ def searchView(request):
     return render(request, "search.html", data)
 
 
-#@csrf_exempt
+# @csrf_exempt
 def companyView(request, comp_id):
     '''Widok wykresu wybranej spółki'''
 

@@ -45,3 +45,8 @@ class ContactForm(forms.Form):
         widget=forms.Textarea,
         label=''
     )
+
+
+class MoneyOperationForm(forms.Form):
+    type = forms.ChoiceField(label='Rodzaj operacji', choices=[('Wpłata', 'Wpłata'), ('Wypłata', 'Wypłata')])
+    value = forms.FloatField(required=True, label='', help_text='zł', initial=0.00)

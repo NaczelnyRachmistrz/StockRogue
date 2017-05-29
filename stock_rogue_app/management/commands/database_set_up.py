@@ -46,7 +46,7 @@ class Command(BaseCommand):
                 for row in reader:
                     if row[0] != "<TICKER>":
                         #Pobieramy notowania spółek od 22 maja 2017 roku
-                        if int(row[1]) > 20170521:
+                        if int(row[1]) > 2016 * 100 * 100:
 
 
                             s, created = Spolka.objects.get_or_create(

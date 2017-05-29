@@ -24,9 +24,7 @@ SECRET_KEY = 'p36xzs4ji1ly+f+mymi+0ntfqk-8%qrdihrthl$js-2*ub-u60'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    '127.0.0.1'
-]
+ALLOWED_HOSTS = []
 
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -137,20 +135,17 @@ USE_L10N = True
 
 USE_TZ = True
 
-STATICFILES_FINDERS = [
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-]
+#STATICFILES_FINDERS = [
+ #   'django.contrib.staticfiles.finders.FileSystemFinder',
+ #   'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+#]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+#STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 
 STATIC_URL = '/static/'
-
-# Extra places for collectstatic to find static files.
-# STATICFILES_DIRS = (
-#    os.path.join(BASE_DIR, 'static'),
-# )
-
-#STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'

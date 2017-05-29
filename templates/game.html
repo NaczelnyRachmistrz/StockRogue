@@ -14,6 +14,26 @@
 
 {% block content %}
     {{ super() }}
+    <div class="container-fluid">
+        <h1>Witaj {{ username }}!</h1><br>
+        Masz do wyboru 2 rodzaje gry:
+        <ol>
+            <li>
+                Gra na danych historycznych
+            </li>
+            <li>
+                Gra na bieżąco
+            </li>
+        </ol>
+        <br>
+        <p>Obecnie na koncie masz {{ money | round(2) }}zł</p>
+        <form role="form" action="" method="post">
+            {{ csrf_input }}
+            {{ form.as_p() }}
+            <button type="submit">Wykonaj operację</button>
+        </form>
+        <a href="about.html"></a>
+    </div>
 {% endblock %}
 
 {% block footer %}
