@@ -54,14 +54,7 @@ class Player(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     money = models.FloatField(default=0)
 
-    '''Pamiętamy 5 ostatnich spółek którymi zajmował się gracz'''
-    last_played_company1 = models.ForeignKey('Spolka', on_delete=models.SET_NULL,
-                                             related_name='1+', null=True)
-    last_played_company2 = models.ForeignKey('Spolka', on_delete=models.SET_NULL,
-                                             related_name='2+', null=True)
-    last_played_company3 = models.ForeignKey('Spolka', on_delete=models.SET_NULL,
-                                             related_name='3+', null=True)
-    last_played_company4 = models.ForeignKey('Spolka', on_delete=models.SET_NULL,
-                                             related_name='4+', null=True)
-    last_played_company5 = models.ForeignKey('Spolka', on_delete=models.SET_NULL,
-                                             related_name='5+', null=True)
+class PlayerCompany(models.Model):
+    player = models.ForeignKey(Player)
+    company = models.ForeignKey(Spolka)
+    actions = models.IntegerField()

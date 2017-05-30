@@ -8,13 +8,13 @@ from django.shortcuts import get_object_or_404, render
 from django.views.decorators.csrf import csrf_exempt
 
 from stock_rogue_app.stock_rogue import run_stock_rogue_from_view
-from stock_rogue_app.forms import DaysStrategyForm, LoginForm, ContactForm, MoneyOperationForm
+from stock_rogue_app.forms import DaysStrategyForm, LoginForm, ContactForm, MoneyOperationForm, StartGameForm
 from django.views.decorators.http import require_POST
 from django.contrib.auth import authenticate, login, logout
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib import messages
-
+from datetime import date
 
 def index(request):
     '''Widok strony głównej'''
@@ -63,11 +63,12 @@ def gameView(request):
     player, created = Player.objects.get_or_create(
         user=request.user)
 
-    form_class = MoneyOperationForm
+    money_form_class = MoneyOperationForm
+    game_form_class = StartGameForm
 
     if request.method == 'POST':
-        form = form_class(data=request.POST)
-        if form.is_valid():
+        money_form = money_form_class(data=request.POST)
+        if money_form.is_valid():
             type = request.POST['type']
             value = float(request.POST['value'])
             if (type == 'Wypłata'):
@@ -79,7 +80,9 @@ def gameView(request):
     data = {
         'username': request.user.username,
         'money': player.money,
-        'form': form_class()
+        'money_form': money_form_class(),
+        'game_form': game_form_class(),
+        'date': date.today()
     }
     return render(request, "game.html", data)
 

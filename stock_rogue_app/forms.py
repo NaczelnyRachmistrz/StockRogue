@@ -3,20 +3,32 @@ from __future__ import unicode_literals
 from django import forms
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import User
+from django.forms import SelectDateWidget
+
+from stock_rogue_app.models import Spolka
 
 
 class DaysStrategyForm(forms.Form):
     '''Formularz do wyboru strategii i liczby dni, na jakie przewidujemy.'''
 
     CHOICES = (('A', 'Main'), ('B', 'Naive'), ('C', 'Stable'), ('D', 'Average'))
-    strategia = forms.ChoiceField(label='Strategia:', choices=CHOICES, required=True)
-    ile_dni = forms.IntegerField(label='Liczba dni:', min_value=0, max_value=30, required=True)
+
+    strategia = forms.ChoiceField(label='Strategia:',
+                                  choices=CHOICES,
+                                  required=True)
+    ile_dni = forms.IntegerField(label='Liczba dni:',
+                                 min_value=0,
+                                 max_value=30,
+                                 required=True)
 
 
 class LoginForm(forms.Form):
     '''Formularz do logowania.'''
-    username = forms.CharField(label="Login:", max_length=30)
-    password = forms.CharField(label="Hasło:", widget=forms.PasswordInput())
+    username = forms.CharField(label="Login:",
+                               max_length=30)
+
+    password = forms.CharField(label="Hasło:",
+                               widget=forms.PasswordInput())
 
     def clean_username(self):
         username = self.cleaned_data['username']
@@ -38,8 +50,10 @@ class LoginForm(forms.Form):
 
 
 class ContactForm(forms.Form):
-    contact_name = forms.CharField(required=True, label='Przedstaw się')
-    contact_email = forms.EmailField(required=True, label='Podaj e-mail na który będziemy mogli Ci odpisać')
+    contact_name = forms.CharField(required=True,
+                                   label='Przedstaw się')
+    contact_email = forms.EmailField(required=True,
+                                     label='Podaj e-mail na który będziemy mogli Ci odpisać')
     content = forms.CharField(
         required=True,
         widget=forms.Textarea,
@@ -48,5 +62,26 @@ class ContactForm(forms.Form):
 
 
 class MoneyOperationForm(forms.Form):
-    type = forms.ChoiceField(label='Rodzaj operacji', choices=[('Wpłata', 'Wpłata'), ('Wypłata', 'Wypłata')])
-    value = forms.FloatField(required=True, label='', help_text='zł', initial=0.00)
+    type = forms.ChoiceField(label='Rodzaj operacji',
+                             choices=[('Wpłata', 'Wpłata'), ('Wypłata', 'Wypłata')])
+
+    value = forms.FloatField(required=True,
+                             label='',
+                             help_text='zł',
+                             initial=0.00)
+
+
+class StartGameForm(forms.Form):
+    AVAILABLE_YEARS = [
+        2012, 2013, 2014, 2015, 2016, 2017
+    ]
+
+    spolka = forms.ModelChoiceField(queryset=Spolka.objects
+                                    .filter(typ='SP')
+                                    .order_by('skrot'))
+
+    date = forms.DateField(label='Data początkowa',
+                           widget=SelectDateWidget(years=AVAILABLE_YEARS,
+                                                   empty_label=("Rok", "Miesiąc", "Dzień"),
+                                                   ),
+                           required=True)
