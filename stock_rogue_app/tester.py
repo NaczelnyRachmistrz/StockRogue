@@ -1,8 +1,8 @@
 import datetime
-from stock_rogue_app.strategies import strategyA
-from stock_rogue_app.strategies import strategyB
-from stock_rogue_app.strategies import strategyC
-from stock_rogue_app.strategies import strategyD
+from stock_rogue_app.strategies import MainStrategy
+from stock_rogue_app.strategies import NaiveStrategy
+from stock_rogue_app.strategies import StableStrategy
+from stock_rogue_app.strategies import AverageStrategy
 from stock_rogue_app.strategies.futureDataGenerator import generate_future_data
 from stock_rogue_app.strategies.machine_learning_strategies import strategy_linear_regression
 from stock_rogue_app.strategies.machine_learning_strategies import auxiliary_functions

@@ -1,35 +1,50 @@
-
 class StrategyData():
-
-    def __init__(self, number_of_past_days, alpha, gamma, company_name, company_data):
-        self.number_of_past_days = number_of_past_days
-        self.alpha = alpha
-        self.beta = 1.0 - alpha
-        self.gamma = gamma
+    def __init__(self,
+                 company_name,
+                 company_data,
+                 number_of_past_days,
+                 volume_importance_coefficient,
+                 past_time_importance_coefficient):
         self.company_name = company_name
         self.company_data = company_data
-        self.sum_volume = self.sum_volume()
+        self.number_of_past_days = number_of_past_days
+        self.volume_IC = volume_importance_coefficient
+        self.time_IC = 1.0 - self.volume_IC
+        self.past_time_IC = past_time_importance_coefficient
+
+    def predict_future_average_name_value(self, name):
+        return self.predict_future_average_name_value_volume_part(name) + \
+               self.predict_future_average_name_value_time_part(name)
 
     def sum_volume(self):
         result = 0
         for idx, day in enumerate(self.company_data):
-            if idx >= self.number_of_past_days:
+            if idx > self.number_of_past_days:
                 break
             result += day['obrot']
         return result
 
-    def predict_future_average_name_value(self, name):
+    def predict_future_average_name_value_volume_part(self, name):
         result = 0.0
-        gamma_acc = self.beta
-        gamma_max = pow(self.gamma, self.number_of_past_days)
-        if gamma_max == 1.0 or gamma_max == 0.0:
-            gamma_factor = 1 / self.number_of_past_days
-        else:
-            gamma_factor = (1 - self.gamma) / (1 - gamma_max)
 
         for _, day in zip(range(self.number_of_past_days), self.company_data):
-            result += day[name] * (self.alpha * (day['obrot'] / self.sum_volume) +
-                                   gamma_acc * gamma_factor)
-            gamma_acc *= self.gamma
+            result += day[name] * (day['obrot'] / self.sum_volume)
 
-        return result
+        return result * self.volume_IC
+
+    def predict_future_average_name_value_time_part(self, name):
+        result = 0.0
+
+        past_time_IC_acc = self.time_IC
+
+        max_past_time_IC_acc = pow(self.past_time_IC, self.number_of_past_days)
+        if max_past_time_IC_acc == 1.0:
+            past_time_IC_acc = 1 / self.number_of_past_days
+        else:
+            past_time_IC_acc = (1 - self.past_time_IC) / (1 - max_past_time_IC_acc)
+
+        for _, day in zip(range(self.number_of_past_days), self.company_data):
+            result += day[name] * past_time_IC_acc
+            past_time_IC_acc *= self.past_time_IC
+
+        return result * self.time_IC
