@@ -26,9 +26,10 @@ class StrategyData():
 
     def predict_future_average_name_value_volume_part(self, name):
         result = 0.0
+        sum_volume = self.sum_volume()
 
         for _, day in zip(range(self.number_of_past_days), self.company_data):
-            result += day[name] * (day['obrot'] / self.sum_volume)
+            result += day[name] * (day['obrot'] / sum_volume)
 
         return result * self.volume_IC
 
