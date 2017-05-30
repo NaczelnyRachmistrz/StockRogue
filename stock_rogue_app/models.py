@@ -58,3 +58,8 @@ class PlayerCompany(models.Model):
     player = models.ForeignKey(Player)
     company = models.ForeignKey(Spolka)
     actions = models.IntegerField()
+    value = models.FloatField()
+
+    def __str__(self):
+        return str(self.actions) + " akcji firmy " + self.company.__str__() + \
+               ". Kupione za " + str(self.value) + "zł"
