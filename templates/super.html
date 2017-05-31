@@ -33,7 +33,7 @@
                     <li><a href="/all/SP">SPÓŁKI</a></li>
                     <li><a href="/all/IN">INDEKSY</a></li>
                     {% if request.user.is_authenticated %}
-                        <li><a href="{{ url('game_view', args=["2012-01-01"])}}">GRAJ</a></li>
+                        <li><a href="{{ url('game_view', args=["2012-01-01"]) }}">GRAJ</a></li>
                     {% endif %}
                     <li><a href="/strategies">STRATEGIE</a></li>
                     <li><a href="/search">WYSZUKAJ</a></li>
@@ -42,10 +42,12 @@
                         <li><a href="/accounts/login">ZALOGUJ SIĘ</a></li>
                     {% else %}
                         <li>
-                            <form method="post" action="/logout/"><input type="submit" value="WYLOGUJ SIĘ">
-                                {{ csrf_input }}
-                                <input type="hidden" value="{{ request.path }}" name="redirect">
-                            </form>
+                            <a>
+                                <form method="post" action="/logout/"><input type="submit" value="WYLOGUJ SIĘ">
+                                    {{ csrf_input }}
+                                    <input type="hidden" value="{{ request.path }}" name="redirect">
+                                </form>
+                            </a>
                         </li>
                     {% endif %}
                 </ul>

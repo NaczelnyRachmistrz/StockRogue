@@ -79,6 +79,9 @@ def strategiesView(request):
     return render(request, "strategies.html")
 
 def doActionOperation(price, type, number, player, company):
+
+    MIN_COMMISION = 3
+    PERCENT_COMMISION = 0.003
     if (type == 'Kupno'):
         number = (-1) * number
 
@@ -89,7 +92,7 @@ def doActionOperation(price, type, number, player, company):
     new_actions.save()
     if new_actions.number == 0:
         new_actions.delete()
-    commision = max([3, number * 0.03 * price])
+    commision = max([MIN_COMMISION, number * PERCENT_COMMISION * price])
     player.money += number * price - commision
     player.save()
 
