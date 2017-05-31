@@ -30,6 +30,10 @@ footer .glyphicon {
     color: silver;
 }
 
+
+.carousel-control {
+    max-height: 500px; !important
+  
 @media screen and (max-width: 768px) {
     .col-sm-4 {
         text-align: center;

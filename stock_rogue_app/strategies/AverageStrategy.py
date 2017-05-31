@@ -3,7 +3,7 @@
 ## Naive strategy that looks only at one day past.
 ##
 
-from stock_rogue_app.strategies import strategyA
+from stock_rogue_app.strategies import MainStrategy
 
 from stock_rogue_app.strategies.StrategyDataContainers import StrategyData
 

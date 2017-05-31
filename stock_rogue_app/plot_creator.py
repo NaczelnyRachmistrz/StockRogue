@@ -84,9 +84,11 @@ def create_plot(plot_data, company):
             type='date'
         ),
         yaxis=dict(
-            autorange=True
+            autorange=True,
+            fixedrange=False
         )
     )
 
     fig = dict(data=data, layout=layout)
-    off.plot(fig, filename=os.path.join(BASE_DIR, "templates",  company + ".html"), auto_open=False)
+    #off.plot(fig, filename=os.path.join(BASE_DIR, "static",  company + ".html"), auto_open=False)
+    return off.plot(fig, include_plotlyjs=False, output_type='div')

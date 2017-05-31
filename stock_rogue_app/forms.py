@@ -11,8 +11,10 @@ from stock_rogue_app.models import Spolka
 class DaysStrategyForm(forms.Form):
     '''Formularz do wyboru strategii i liczby dni, na jakie przewidujemy.'''
 
-    CHOICES = (('A', 'Main'), ('B', 'Naive'), ('C', 'Stable'), ('D', 'Average'))
-
+    CHOICES = (('A', 'Main'), ('B', 'Naive'), ('C', 'Stable'), ('D', 'Average'),
+               ('E', 'Linear Regression'), ('F', 'Polynomial Regression'),
+               ('G', 'Huber Regression'))
+    
     strategia = forms.ChoiceField(label='Strategia:',
                                   choices=CHOICES,
                                   required=True)

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.http import HttpResponseRedirect, HttpResponseForbidden
+from django.http import HttpResponseRedirect, HttpResponseForbidden, HttpResponse
 
 from stock_rogue_app.models import Spolka, Player, Actions
 from django.shortcuts import get_object_or_404, render
@@ -50,6 +50,8 @@ def contactView(request):
 
     return render(request, 'contact.html', {'form': form_class()})
 
+def compareView(request, strategy):
+    return HttpResponse("XD")
 
 def strategiesView(request):
     '''Widok strategii'''
@@ -127,9 +129,10 @@ def companyView(request, comp_id):
 
     spolka = get_object_or_404(Spolka, id=comp_id)
 
-    run_stock_rogue_from_view(spolka.skrot, int(request.GET["ile_dni"]), request.GET["strategia"])
+    plot_div = run_stock_rogue_from_view(spolka.skrot, int(request.GET["ile_dni"]), request.GET["strategia"])
 
     data = spolka.__dict__
+    data["plot_div"] = plot_div
 
     return render(request, "company.html", data)
 
