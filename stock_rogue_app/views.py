@@ -92,7 +92,7 @@ def doActionOperation(price, type, number, player, company):
 
     if new_actions.number == 0:
         new_actions.delete()
-    
+
     new_actions.save()
     commision = max([MIN_COMMISION, number * PERCENT_COMMISION * price])
     player.money += number * price - commision
@@ -118,10 +118,10 @@ def gameView(request, date):
     data = 0
     while not data:
         data = Dane.objects.filter(spolka=company, data=date).last()
-        price = data.kurs_biezacy
         today += timedelta(days=1)
         date = datetime.strftime(today, '%Y-%M-%d')
 
+    price = data.kurs_biezacy
     tommorow = today + timedelta(days=1)
 
     player, created = Player.objects.get_or_create(
