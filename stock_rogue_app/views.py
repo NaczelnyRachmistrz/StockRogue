@@ -118,10 +118,10 @@ def gameView(request, date):
 
     company = Spolka.objects.get(skrot='COMARCH')
 
-    data = 0
+    data = Dane.objects.filter(spolka=company, data=today).last()
     while not data:
-        data = Dane.objects.filter(spolka=company, data=today).last()
         today += timedelta(days=1)
+        data = Dane.objects.filter(spolka=company, data=today).last()
         date = datetime.strftime(today, '%Y-%M-%d')
 
     price = data.kurs_biezacy
@@ -160,7 +160,7 @@ def gameView(request, date):
         'money_form': money_form_class(),
         'company_form': company_form_class(),
         'actions_form': action_form_class(),
-        'graph_div': game_from_view("COMARCH", today.date()),
+        'graph_div': game_from_view("COMARCH", tommorow.date()),
         'price' : price,
         'actions': actions,
         'next_day': datetime.strftime(tommorow, '%Y-%M-%d')
