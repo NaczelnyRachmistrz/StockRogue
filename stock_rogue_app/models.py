@@ -61,8 +61,8 @@ class Player(models.Model):
 class Actions(models.Model):
     owner = models.ForeignKey(Player)
     company = models.ForeignKey(Spolka)
-    number = models.IntegerField()
-    value = models.FloatField()
+    number = models.IntegerField(default=0)
+    value = models.FloatField(default=0)
 
     def __str__(self):
         return str(self.number) + " akcji firmy " + self.company.__str__() + \

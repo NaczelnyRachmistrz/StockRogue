@@ -66,13 +66,25 @@
 
 
         <div class="col-md-8">
-            <div hidden>
-                <h1>Witaj {{ username }}!</h1>
-                <form role="form" action="" method="post" id="start_game">
+            <div class="col-md-12">
+                <form role="form" action="" method="post">
                     {{ csrf_input }}
-                    {{ game_form.as_p() }}
-                    <input type="submit" value="Rozpocznij grę!">
+                    {{ company_form.as_p() }}
                 </form>
+            </div>
+
+            <div id="graph"></div>
+            <div>
+                <div class="col-md-10">
+                    <form role="form" action="" method="post">
+                        {{ csrf_input }}
+                        {{ actions_form.as_p() }}
+                        <button type="submit">Wykonaj operację</button>
+                    </form>
+                </div>
+                <div class="col-md-2">
+                    <a href="{{ url('game_view', args=[next_day])}}">Następny dzień</a>
+                </div>
             </div>
         </div>
     </div>
