@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.http import HttpResponseRedirect, HttpResponseForbidden, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponseForbidden, HttpResponse, JsonResponse
 
 from stock_rogue_app.models import Spolka, Player, Actions
 from django.shortcuts import get_object_or_404, render
@@ -50,6 +50,7 @@ def contactView(request):
 
     return render(request, 'contact.html', {'form': form_class()})
 
+
 def compareView(request, strategy):
     '''Widok porównania strategii do rzeczywistych notowań'''
 
@@ -70,6 +71,7 @@ def compareView(request, strategy):
     data["plot_div"] = plot_div
 
     return render(request, "company.html", data)
+
 
 def strategiesView(request):
     '''Widok strategii'''
@@ -94,7 +96,7 @@ def gameView(request):
             type = request.POST['type']
             value = float(request.POST['value'])
             if (type == 'Wypłata'):
-                value = (-1) * value
+                value = (-1) * value - 2 #commision
             player.money += value
             player.save()
         HttpResponseRedirect(request.META.get('HTTP_REFERER'))
@@ -134,7 +136,6 @@ def searchView(request):
     return render(request, "search.html", data)
 
 
-# @csrf_exempt
 def companyView(request, comp_id):
     '''Widok wykresu wybranej spółki'''
 
@@ -147,7 +148,9 @@ def companyView(request, comp_id):
 
     spolka = get_object_or_404(Spolka, id=comp_id)
 
-    plot_div = run_stock_rogue_from_view(spolka.skrot, int(request.GET["ile_dni"]), request.GET["strategia"])
+    plot_div = run_stock_rogue_from_view(spolka.skrot,
+                                         int(request.GET["ile_dni"]),
+                                         request.GET["strategia"])
 
     data = spolka.__dict__
     data["plot_div"] = plot_div

@@ -18,7 +18,9 @@
     <div class="container-fluid">
 
 
-        <div class="col-md-4" id="left_column" hidden>
+        <div class="col-md-4" id="left_column">
+            <button type="button" id="play_again" hidden>Graj od nowa</button>
+
             <div id="payments">
                 <h1>Tabela opłat</h1>
                 <table width="100%">
@@ -52,10 +54,11 @@
                     <button type="submit">Wykonaj operację</button>
                 </form>
 
+
                 <h3>Posiadane akcje:</h3>
                 <ul>
                     {% for action in actions %}
-                    <li>{{ action }}</li>
+                        <li>{{ action }}</li>
                     {% endfor %}
                 </ul>
             </div>
@@ -63,8 +66,7 @@
 
 
         <div class="col-md-8">
-            <button type="button" hidden id="play_again">Graj od nowa</button>
-            <div>
+            <div hidden>
                 <h1>Witaj {{ username }}!</h1>
                 <form role="form" action="" method="post" id="start_game">
                     {{ csrf_input }}

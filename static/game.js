@@ -1,33 +1,30 @@
-function dupa() {
+/*
+ $(document).ready(function () {
+ $("#start_game").submit(function (e) {
+ e.preventDefault();
+ var left_column = $("#left_column");
+ left_column.show();
 
+ var start_game_form = $("#start_game");
+ start_game_form.hide();
+ });
 
-    alert('dupa');
+ $("#play_again").click(function () {
 
-    $("#start_game").submit(function (e) {
-        alert('dupa');
-        e.preventDefault();
-        alert('dupa');
-        var left_column = $("#left_column");
-        left_column.show();
+ var left_column = $("#left_column");
+ left_column.hide();
 
-        var start_game_form = $("#start_game");
-        start_game_form.hide();
+ var start_game_form = $("#start_game");
+ start_game_form.show();
+ });
 
-        var play_again_button = $("#play_again");
-        play_again_button.show();
-    });
+ $("#payment").submit(function (e) {
+ e.preventDefault();
+ var left_column = $("#left_column");
+ left_column.show();
 
-    $("#play_again").click(function () {
-
-        var left_column = $("#left_column");
-        left_column.hide();
-
-        var start_game_form = $("#start_game");
-        start_game_form.show();
-
-
-        var play_again_button = $("#play_again");
-        play_again_button.hide();
-    });
-
-}
+ var start_game_form = $("#start_game");
+ start_game_form.hide();
+ });
+ });
+ */
