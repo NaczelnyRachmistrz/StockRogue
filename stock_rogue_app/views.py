@@ -82,16 +82,18 @@ def doActionOperation(price, type, number, player, company):
 
     MIN_COMMISION = 3
     PERCENT_COMMISION = 0.003
-    if (type == 'Kupno'):
+    if (type == 'Sprzedaż'):
         number = (-1) * number
 
-    new_actions = Actions.objects.get_or_create(owner=player,
+    new_actions, _ = Actions.objects.get_or_create(owner=player,
                                                 company=company)
     new_actions.value += number * price
     new_actions.number += number
-    new_actions.save()
+
     if new_actions.number == 0:
         new_actions.delete()
+    
+    new_actions.save()
     commision = max([MIN_COMMISION, number * PERCENT_COMMISION * price])
     player.money += number * price - commision
     player.save()
@@ -109,12 +111,18 @@ def gameView(request, date):
     if not request.user.is_authenticated:
         return HttpResponseRedirect("/")
 
-    company = Spolka.objects.filter(skrot='COMARCH')
+    today = datetime.strptime(date, '%Y-%M-%d')
+
+    company = Spolka.objects.get(skrot='COMARCH')
 
     data = 0
     while not data:
-        data = Dane.objects.filter(spolka=company, data=date)
+        data = Dane.objects.filter(spolka=company, data=date).last()
+        price = data.kurs_biezacy
+        today += timedelta(days=1)
+        date = datetime.strftime(today, '%Y-%M-%d')
 
+    tommorow = today + timedelta(days=1)
 
     player, created = Player.objects.get_or_create(
         user=request.user)
@@ -142,7 +150,6 @@ def gameView(request, date):
 
         HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-    tommorow = datetime.strptime(date, '%Y-%M-%d') + timedelta(days=1)
 
     data = {
         'username': request.user.username,
@@ -150,7 +157,7 @@ def gameView(request, date):
         'money_form': money_form_class(),
         'company_form': company_form_class(),
         'actions_form': action_form_class(),
-        'price' : data.kurs_biezacy,
+        'price' : price,
         'actions': actions,
         'next_day': datetime.strftime(tommorow, '%Y-%M-%d')
     }

@@ -65,5 +65,5 @@ class Actions(models.Model):
     value = models.FloatField(default=0)
 
     def __str__(self):
-        return str(self.number) + " akcji firmy " + self.company.__str__() + \
-               ". Kupione za " + str(self.value) + "zł"
+        return str(self.number) + " firmy " + self.company.__str__() + \
+               ". Kupione za " + str(round(self.value, 2)) + "zł"
