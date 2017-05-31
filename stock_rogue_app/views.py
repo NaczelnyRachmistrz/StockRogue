@@ -7,7 +7,7 @@ from stock_rogue_app.models import Spolka, Player, Actions
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.csrf import csrf_exempt
 
-from stock_rogue_app.stock_rogue import run_stock_rogue_from_view
+from stock_rogue_app.stock_rogue import run_stock_rogue_from_view, compare_from_view
 from stock_rogue_app.forms import DaysStrategyForm, LoginForm, ContactForm, MoneyOperationForm, StartGameForm
 from django.views.decorators.http import require_POST
 from django.contrib.auth import authenticate, login, logout
@@ -51,7 +51,25 @@ def contactView(request):
     return render(request, 'contact.html', {'form': form_class()})
 
 def compareView(request, strategy):
-    return HttpResponse("XD")
+    '''Widok porównania strategii do rzeczywistych notowań'''
+
+    spolka = get_object_or_404(Spolka, skrot="COMARCH")
+
+    # Placeholder
+
+    start_data = date(2016, 1, 1)
+
+    ile_dni = 30
+
+    plot_div = compare_from_view(spolka.skrot,
+                                 start_data,
+                                 ile_dni,
+                                 strategy)
+
+    data = spolka.__dict__
+    data["plot_div"] = plot_div
+
+    return render(request, "company.html", data)
 
 def strategiesView(request):
     '''Widok strategii'''

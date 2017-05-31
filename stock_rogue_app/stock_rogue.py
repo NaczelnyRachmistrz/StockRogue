@@ -5,9 +5,10 @@ import argparse
 import sys
 
 from StockRogue.downloader import update_data
-from stock_rogue_app.data_selector import select_data
+from stock_rogue_app.data_selector import select_data, select_period_data
 from .estimator import estimate_values
-from .plot_creator import plot_preprocess, create_plot
+from .plot_creator import plot_preprocess, create_plot, create_compare_plot
+from .tester import estimate_past_values
 
 def run_stock_rogue_from_view(name, interval_length, strategy_name):
     # Zbiera dane spółki z bazy danych
@@ -21,5 +22,18 @@ def run_stock_rogue_from_view(name, interval_length, strategy_name):
 
     # Tworzy wykres i zwraca diva go zawierającego
     plot = create_plot(plot_data, name)
+
+    return plot
+
+def compare_from_view(name, start_date, interval_length, strategy_name):
+    # Zbiera dane spółki z bazy danych i zwraca indeks pierwszej daty interesującego nas okresu
+    company_data, start_index = select_period_data(name, start_date)
+
+    print(start_index)
+    # Przewiduje wartość akcji spółki w zadanym okresie na podstawie wybranej strategii
+    predicted_data = estimate_past_values(strategy_name, company_data, start_index, interval_length)
+
+    # Tworzy wykres i zwraca diva go zawierającego
+    plot = create_compare_plot(predicted_data, name)
 
     return plot

@@ -103,9 +103,6 @@ def prepare_data(company_data, days_past, wig_data=True, poly_reg=False):
     FIELDS = ("kurs_min", "kurs_max", "kurs_biezacy")
     X_matrix = {}
     y_vector = {}
-    lin_model = {}
-
-    company_data_copy = list(company_data)
 
     for el in FIELDS:
         X_matrix[el], y_vector[el] = vectorize_data(company_data,

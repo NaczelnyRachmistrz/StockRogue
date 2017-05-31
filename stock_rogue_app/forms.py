@@ -14,7 +14,7 @@ class DaysStrategyForm(forms.Form):
     CHOICES = (('A', 'Main'), ('B', 'Naive'), ('C', 'Stable'), ('D', 'Average'),
                ('E', 'Linear Regression'), ('F', 'Polynomial Regression'),
                ('G', 'Huber Regression'))
-    
+
     strategia = forms.ChoiceField(label='Strategia:',
                                   choices=CHOICES,
                                   required=True)
