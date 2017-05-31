@@ -146,35 +146,24 @@ def create_compare_plot(plot_data, company):
 
     return off.plot(fig, include_plotlyjs=False, output_type='div')
 
+def create_past_plot(plot_data, company, last_date):
+    """Funkcja odpowiedzialna za rysowanie wykresu dla funkcji do odpowiedniego
+        momentu w przeszłości."""
 
-def create_past_plot(plot_data, company, ):
-    """Główna funkcja odpowiedzialna za tworzenie wykresów. W wyniku jej działania w folderze templates
-        pojawia się plik .html z gotowym wykresem"""
+    pl_data = [el["data"] for el in plot_data if el["data"] < last_date]
+    pl_kurs_biezacy = [el["kurs_biezacy"] for el in plot_data if el["data"] < last_date]
 
-    pl_data = [el["data"] for el in plot_data[1]]
-
-    data_max = max(pl_data[0], pl_data[-1])
-    pl_curr = [el["kurs_biezacy"] for el in plot_data[0]]
-    predict_curr = [el["kurs_biezacy"] for el in plot_data[1] if el["data"] <= data_max]
-
-    trace_correct = go.Scatter(
+    trace_curr = go.Scatter(
         x=pl_data,
-        y=pl_curr,
+        y=pl_kurs_biezacy,
         name=company + " - kurs bieżący",
         line=dict(color='#17BECF'),
         opacity=0.8)
 
-    trace_predict = go.Scatter(
-        x=pl_data,
-        y=predict_curr,
-        name=company + " - przewidywany kurs bieżący",
-        line=dict(color='#7F7F7F'),
-        opacity=0.8)
-
-    data = [trace_correct, trace_predict]
+    data = [trace_curr]
 
     layout = dict(
-        title='Test ' + company,
+        title='Notowania ' + company,
         xaxis=dict(
             rangeselector=dict(
                 buttons=list([

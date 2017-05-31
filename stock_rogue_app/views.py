@@ -7,7 +7,7 @@ from stock_rogue_app.models import Spolka, Player, Actions, Dane
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.csrf import csrf_exempt
 
-from stock_rogue_app.stock_rogue import run_stock_rogue_from_view, compare_from_view
+from stock_rogue_app.stock_rogue import run_stock_rogue_from_view, compare_from_view, game_from_view
 from stock_rogue_app.forms import DaysStrategyForm, LoginForm, ContactForm, \
     MoneyOperationForm, ActionOperationForm, CompanyChooseForm
 from django.views.decorators.http import require_POST
@@ -92,7 +92,7 @@ def doActionOperation(price, type, number, player, company):
 
     if new_actions.number == 0:
         new_actions.delete()
-    
+
     new_actions.save()
     commision = max([MIN_COMMISION, number * PERCENT_COMMISION * price])
     player.money += number * price - commision
@@ -118,10 +118,10 @@ def gameView(request, date):
     data = 0
     while not data:
         data = Dane.objects.filter(spolka=company, data=date).last()
-        price = data.kurs_biezacy
         today += timedelta(days=1)
         date = datetime.strftime(today, '%Y-%M-%d')
 
+    price = data.kurs_biezacy
     tommorow = today + timedelta(days=1)
 
     player, created = Player.objects.get_or_create(
@@ -157,6 +157,7 @@ def gameView(request, date):
         'money_form': money_form_class(),
         'company_form': company_form_class(),
         'actions_form': action_form_class(),
+        'graph_div': game_from_view("COMARCH", today.date()),
         'price' : price,
         'actions': actions,
         'next_day': datetime.strftime(tommorow, '%Y-%M-%d')
