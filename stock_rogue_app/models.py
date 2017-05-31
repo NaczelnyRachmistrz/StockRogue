@@ -54,12 +54,16 @@ class Player(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     money = models.FloatField(default=0)
 
-class PlayerCompany(models.Model):
-    player = models.ForeignKey(Player)
+    def __str__(self):
+        return self.user.__str__() + " " + str(self.money) + "zł"
+
+
+class Actions(models.Model):
+    owner = models.ForeignKey(Player)
     company = models.ForeignKey(Spolka)
-    actions = models.IntegerField()
+    number = models.IntegerField()
     value = models.FloatField()
 
     def __str__(self):
-        return str(self.actions) + " akcji firmy " + self.company.__str__() + \
+        return str(self.number) + " akcji firmy " + self.company.__str__() + \
                ". Kupione za " + str(self.value) + "zł"

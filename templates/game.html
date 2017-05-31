@@ -4,6 +4,10 @@
 
 {% block head %}
     {{ super() }}
+    <script type="text/javascript" src="/static/game.js"></script>
+    <script>
+    dupa()
+    </script>
 {% endblock %}
 
 <body>
@@ -16,36 +20,61 @@
     {{ super() }}
     <div class="container-fluid">
 
-        <div class="col-md-4">
-            <h1>Witaj {{ username }}!</h1><br>
-            Masz do wyboru 2 rodzaje gry:
-            <ol>
-                <li>
-                    Gra na danych historycznych
-                </li>
-                <li>
-                    Gra na bieżąco
-                </li>
-            </ol>
-            <br>
-            <p>Obecnie na koncie masz {{ money | round(2) }}zł</p>
-            <form role="form" action="" method="post">
-                {{ csrf_input }}
-                {{ money_form.as_p() }}
-                <button type="submit">Wykonaj operację</button>
-            </form>
 
+        <div class="col-md-4" id="left_column" hidden>
+            <div id="payments">
+                <h1>Tabela opłat</h1>
+                <table width="100%">
+                    <thead>
+                    <tr>
+                        <th>Operacja</th>
+                        <th>Koszt</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Wpłata</td>
+                        <td>0zł</td>
+                    </tr>
+                    <tr>
+                        <td>Wypłata</td>
+                        <td>2zł</td>
+                    </tr>
+                    <tr>
+                        <td>Kupno / Sprzedaż</td>
+                        <td>0.3% kwoty (min 3zł)</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="possession">
+                <h3>Obecnie na koncie masz {{ money | round(2) }}zł</h3>
+                <form role="form" action="" method="post">
+                    {{ csrf_input }}
+                    {{ money_form.as_p() }}
+                    <button type="submit">Wykonaj operację</button>
+                </form>
+
+                <h3>Posiadane akcje:</h3>
+                <ul>
+                    {% for action in actions %}
+                    <li>{{ action }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
 
 
         <div class="col-md-8">
-
-            <form role="form" action="" method="post">
-                {{ csrf_input }}
-                {{ game_form.as_p() }}
-                <button type="submit">Rozpocznij grę!</button>
-            </form>
-
+            <button type="button" hidden id="play_again">Graj od nowa</button>
+            <div>
+                <h1>Witaj {{ username }}!</h1>
+                <form role="form" action="" method="post" id="start_game">
+                    {{ csrf_input }}
+                    {{ game_form.as_p() }}
+                    <input type="submit" value="Rozpocznij grę!">
+                </form>
+            </div>
         </div>
     </div>
 {% endblock %}

@@ -76,12 +76,18 @@ class StartGameForm(forms.Form):
         2012, 2013, 2014, 2015, 2016, 2017
     ]
 
-    spolka = forms.ModelChoiceField(queryset=Spolka.objects
-                                    .filter(typ='SP')
-                                    .order_by('skrot'))
+    # company = forms.ModelChoiceField(label='Spółka',
+    #                                 queryset=Spolka.objects
+    #                                 .filter(typ='SP')
+    #                                 .order_by('skrot'))
 
-    date = forms.DateField(label='Data początkowa',
+    date = forms.DateField(label='Data rozpoczęcia gry',
                            widget=SelectDateWidget(years=AVAILABLE_YEARS,
                                                    empty_label=("Rok", "Miesiąc", "Dzień"),
                                                    ),
                            required=True)
+
+    initial_money = forms.IntegerField(label='Początkowe zasoby pieniężne',
+                                       min_value=0,
+                                       help_text='zł',
+                                       required=True)

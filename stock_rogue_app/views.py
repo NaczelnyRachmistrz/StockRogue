@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 
-from stock_rogue_app.models import Spolka, Player
+from stock_rogue_app.models import Spolka, Player, Actions
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.csrf import csrf_exempt
 
@@ -15,6 +15,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib import messages
 from datetime import date
+
 
 def index(request):
     '''Widok strony głównej'''
@@ -63,6 +64,7 @@ def gameView(request):
     player, created = Player.objects.get_or_create(
         user=request.user)
 
+    actions = Actions.objects.filter(owner=player)
     money_form_class = MoneyOperationForm
     game_form_class = StartGameForm
 
@@ -82,7 +84,8 @@ def gameView(request):
         'money': player.money,
         'money_form': money_form_class(),
         'game_form': game_form_class(),
-        'date': date.today()
+        'date': date.today(),
+        'actions': actions
     }
     return render(request, "game.html", data)
 
