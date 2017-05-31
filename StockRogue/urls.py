@@ -34,5 +34,3 @@ urlpatterns = [
     url(r'^about/$', aboutView, name='about'),
     url(r'^admin/', admin.site.urls)
 ]
-
-urlpatterns += staticfiles_urlpatterns()

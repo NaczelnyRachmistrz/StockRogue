@@ -3,6 +3,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Spolka(models.Model):
@@ -48,3 +49,21 @@ class Dane(models.Model):
         return str(self.spolka.skrot) + " " + str(self.data.strftime('%d/%m/%y'))
 
 
+class Player(models.Model):
+    '''Model reprezentujący dane zarejestrowanego użytkownika.'''
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    money = models.FloatField(default=0)
+
+    def __str__(self):
+        return self.user.__str__() + " " + str(self.money) + "zł"
+
+
+class Actions(models.Model):
+    owner = models.ForeignKey(Player)
+    company = models.ForeignKey(Spolka)
+    number = models.IntegerField()
+    value = models.FloatField()
+
+    def __str__(self):
+        return str(self.number) + " akcji firmy " + self.company.__str__() + \
+               ". Kupione za " + str(self.value) + "zł"

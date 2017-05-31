@@ -46,7 +46,7 @@ class Command(BaseCommand):
                 for row in reader:
                     if row[0] != "<TICKER>":
                         #Pobieramy notowania spółek od 22 maja 2017 roku
-                        if int(row[1]) > 20170521:
+                        if int(row[1]) > 2016 * 100 * 100:
 
 
                             s, created = Spolka.objects.get_or_create(
@@ -54,6 +54,7 @@ class Command(BaseCommand):
                             )
 
                             print("wczytuję" + row[0] + " " + row[1])
+                            """
                             Dane.objects.create(
                                 spolka=s,
                                 kurs_otwarcia=float(row[2]),
@@ -75,4 +76,3 @@ class Command(BaseCommand):
                                 obrot=float(row[6]))
                             )
                 Dane.objects.bulk_create(insert_list)
-                            """

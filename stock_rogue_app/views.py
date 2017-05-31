@@ -3,17 +3,18 @@ from __future__ import unicode_literals
 
 from django.http import HttpResponseRedirect, HttpResponseForbidden, HttpResponse
 
-from stock_rogue_app.models import Spolka
+from stock_rogue_app.models import Spolka, Player, Actions
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.csrf import csrf_exempt
 
 from stock_rogue_app.stock_rogue import run_stock_rogue_from_view
-from stock_rogue_app.forms import DaysStrategyForm, LoginForm, ContactForm
+from stock_rogue_app.forms import DaysStrategyForm, LoginForm, ContactForm, MoneyOperationForm, StartGameForm
 from django.views.decorators.http import require_POST
 from django.contrib.auth import authenticate, login, logout
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib import messages
+from datetime import date
 
 
 def index(request):
@@ -60,9 +61,35 @@ def strategiesView(request):
 def gameView(request):
     '''Widok gry'''
     if not request.user.is_authenticated:
-        return HttpResponseRedirect("/");
-    return render(request, "game.html")
+        return HttpResponseRedirect("/")
 
+    player, created = Player.objects.get_or_create(
+        user=request.user)
+
+    actions = Actions.objects.filter(owner=player)
+    money_form_class = MoneyOperationForm
+    game_form_class = StartGameForm
+
+    if request.method == 'POST':
+        money_form = money_form_class(data=request.POST)
+        if money_form.is_valid():
+            type = request.POST['type']
+            value = float(request.POST['value'])
+            if (type == 'Wypłata'):
+                value = (-1) * value
+            player.money += value
+            player.save()
+        HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+    data = {
+        'username': request.user.username,
+        'money': player.money,
+        'money_form': money_form_class(),
+        'game_form': game_form_class(),
+        'date': date.today(),
+        'actions': actions
+    }
+    return render(request, "game.html", data)
 
 
 def allView(request, type):
@@ -89,7 +116,7 @@ def searchView(request):
     return render(request, "search.html", data)
 
 
-#@csrf_exempt
+# @csrf_exempt
 def companyView(request, comp_id):
     '''Widok wykresu wybranej spółki'''
 
