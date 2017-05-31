@@ -8,9 +8,37 @@ from stock_rogue_app.strategies.machine_learning_strategies import strategy_line
 from stock_rogue_app.strategies.machine_learning_strategies import auxiliary_functions
 from stock_rogue_app.strategies.machine_learning_strategies import vector_preprocess
 
-#Under construction
+from sklearn import linear_model
 
-def estimate_past_values(start_date, predict_interval, strategy, company_data):
+# Funkcje pomocnicze
+
+def choose_table_and_poly(company_data, strategy):
+    '''Pomocnicza funkcja, wybierająca tablicę dni w przeszłości i czy
+        chcemy regresję wielomianową'''
+    if strategy == 'E':
+        return auxiliary_functions.default_table_picker(company_data), False
+    elif strategy == 'F':
+        return auxiliary_functions.default_table_picker(company_data, True), True
+    elif strategy == 'G':
+        return auxiliary_functions.default_table_picker(company_data, True), False
+
+
+
+def give_model(X_matrix, y_vector, strategy):
+    '''Wybiera model dla danej strategii'''
+
+    if (strategy == 'E') or (strategy == 'F'):
+        model = linear_model.LinearRegression()
+    elif strategy == 'G':
+        model = linear_model.HuberRegressor()
+
+    model.fit(X_matrix, y_vector)
+
+    return model
+
+# Funkcja główna
+
+def estimate_past_values(strategy, company_data, start_index, interval_length):
     '''Funkcja zwraca przewidywane kursy akcji na podstawie wybranej strategii
        w wybranym okresie w przesżłości'''
 
@@ -21,10 +49,17 @@ def estimate_past_values(start_date, predict_interval, strategy, company_data):
                  True,
                  poly_reg)
 
-    model = give_model(X_matrix, y_vector, strategy)
+    model = give_model(X_matrix, y_vector["kurs_biezacy"], strategy)
 
-    prediction = duplicate_table(start_date, predict_interval)
+    X_matrix_test = X_matrix[(start_index - interval_length):(start_index + 1)]
 
-    for
+    predicted_values = [{"kurs_biezacy": model.predict([X_matrix_test[i + 1]])[0]*
+                                         company_data[start_index + i - interval_length + 1]["kurs_biezacy"],
+                         "data": company_data[start_index - interval_length + i]["data"]}
+                        for i in range(interval_length)]
 
-    return predicted_values
+    values = [{"kurs_biezacy": company_data[start_index + i - interval_length]["kurs_biezacy"],
+                "data": company_data[start_index - interval_length + i]["data"]}
+                        for i in range(interval_length)]
+
+    return (predicted_values, values)
