@@ -42,7 +42,7 @@ def predict_future_values(company_name, number_of_past_days, company_data, resul
 
 
 def day_trend(current_day, previous_day):
-    trend = current_day
+    trend = dict(current_day)
     for name in value_names:
         trend[name] = (2 * current_day[name] - previous_day[name]) / previous_day[name]
     return trend

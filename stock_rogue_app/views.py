@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.http import HttpResponseRedirect, HttpResponseForbidden, HttpResponse, JsonResponse
 
-from stock_rogue_app.models import Spolka, Player, Actions
+from stock_rogue_app.models import Spolka, Player, Actions, Dane
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.csrf import csrf_exempt
 
@@ -109,6 +109,13 @@ def gameView(request, date):
     if not request.user.is_authenticated:
         return HttpResponseRedirect("/")
 
+    company = Spolka.objects.filter(skrot='COMARCH')
+
+    data = 0
+    while not data:
+        data = Dane.objects.filter(spolka=company, data=date)
+
+
     player, created = Player.objects.get_or_create(
         user=request.user)
 
@@ -129,7 +136,6 @@ def gameView(request, date):
         action_form = action_form_class(data=request.POST)
 
         if action_form.is_valid():
-            price = request.POST['act_price']
             type = request.POST['act_type']
             number = int(request.POST['act_number'])
             doActionOperation(price, type, number, player, company)
@@ -144,6 +150,7 @@ def gameView(request, date):
         'money_form': money_form_class(),
         'company_form': company_form_class(),
         'actions_form': action_form_class(),
+        'price' : data.kurs_biezacy,
         'actions': actions,
         'next_day': datetime.strftime(tommorow, '%Y-%M-%d')
     }

@@ -67,10 +67,11 @@
 
         <div class="col-md-8">
             <div class="col-md-12">
-                <form role="form" action="" method="post">
+                <form role="form" action="" method="post" id="comp_form">
                     {{ csrf_input }}
                     {{ company_form.as_p() }}
                 </form>
+                {{ price }}
             </div>
 
             <div id="graph"></div>

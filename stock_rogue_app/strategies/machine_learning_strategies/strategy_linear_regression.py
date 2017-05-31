@@ -7,6 +7,7 @@ from . import vector_preprocess
 
 from . import auxiliary_functions
 
+
 def predict_future(company_data, result, days_past,
                    wig_data=True, poly_reg=False, huber_reg=False):
     '''Strategia wykorzystująca różne techniki regresji liniowej. Przyjmuje za czynniki
@@ -24,11 +25,10 @@ def predict_future(company_data, result, days_past,
 
     for el in FIELDS:
         lin_model[el] = linear_model.HuberRegressor() \
-                        if huber_reg else linear_model.LinearRegression()
+            if huber_reg else linear_model.LinearRegression()
 
         lin_model[el].fit(X_matrix_combined,
                           y_vector[el])
-
 
     X_vector = {}
     for day in result:
@@ -36,9 +36,9 @@ def predict_future(company_data, result, days_past,
         for el in FIELDS:
             value = company_data_copy[0][el]
             X_vector[el] = vector_preprocess.percentage_change_days(company_data_copy,
-                                                  el,
-                                                  days_past,
-                                                  value)
+                                                                    el,
+                                                                    days_past,
+                                                                    value)
 
         X_vector_combined = X_vector[FIELDS[0]] + \
                             X_vector[FIELDS[1]] + \
@@ -49,7 +49,7 @@ def predict_future(company_data, result, days_past,
             poly.fit_transform(X_vector_combined)
             X_vector_combined = X_vector_combined[0]
 
-        for el in  FIELDS:
+        for el in FIELDS:
             value = company_data_copy[0][el]
             day[el] = lin_model[el].predict(X_vector_combined)[0]
             day[el] *= value
@@ -58,12 +58,8 @@ def predict_future(company_data, result, days_past,
             day["kurs_min"] = day["kurs_max"]
             day["kurs_biezacy"] = day["kurs_min"]
 
-
         company_data_copy = [day] + company_data_copy
 
-    #TODO Dodatkowy rekord, do wywalenia będzie
+    # TODO Dodatkowy rekord, do wywalenia będzie
     result += {}
     return result
-
-
-
