@@ -30,9 +30,11 @@ def predict_future_values(company_name, number_of_past_days, company_data, resul
     default_volume_importance_coefficient = 0.5
     default_past_time_importance_coefficient = 0.5
 
-    company_data_trends = [{}] * (number_of_past_days - 1)
-    for idx, day in zip(range(number_of_past_days - 1), company_data):
-        company_data_trends[idx] = day_trend(company_data[idx], company_data[idx + 1])
+    company_data_trends = [{}] * (number_of_past_days)
+    for idx, day in enumerate(company_data):
+        if idx >= number_of_past_days:
+            break
+        company_data_trends[idx] = dict(day_trend(company_data[idx], company_data[idx + 1]))
 
     trends_data = StrategyData(company_name,
                                  company_data_trends,
@@ -49,7 +51,7 @@ def predict_future_values(company_name, number_of_past_days, company_data, resul
 def day_trend(current_day, previous_day):
     trend = dict(current_day)
     for name in value_names:
-        trend[name] = (2 * current_day[name] - previous_day[name]) / previous_day[name]
+        trend[name] = (2.0 * current_day[name] - previous_day[name]) / previous_day[name]
     return trend
 
 

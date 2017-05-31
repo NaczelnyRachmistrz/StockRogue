@@ -19,7 +19,7 @@ class StrategyData():
     def sum_volume(self):
         result = 0
         for idx, day in enumerate(self.company_data):
-            if idx > self.number_of_past_days:
+            if idx >= self.number_of_past_days:
                 break
             result += day['obrot']
         return result
@@ -36,13 +36,13 @@ class StrategyData():
     def predict_future_average_name_value_time_part(self, name):
         result = 0.0
 
-        past_time_IC_acc = self.time_IC
+        past_time_IC_acc = 1.0
 
         max_past_time_IC_acc = pow(self.past_time_IC, self.number_of_past_days)
         if max_past_time_IC_acc == 1.0:
-            past_time_IC_acc = 1 / self.number_of_past_days
+            past_time_IC_acc = 1.0 / self.number_of_past_days
         else:
-            past_time_IC_acc = (1 - self.past_time_IC) / (1 - max_past_time_IC_acc)
+            past_time_IC_acc = (1.0 - self.past_time_IC) / (1.0 - max_past_time_IC_acc)
 
         for _, day in zip(range(self.number_of_past_days), self.company_data):
             result += day[name] * past_time_IC_acc
