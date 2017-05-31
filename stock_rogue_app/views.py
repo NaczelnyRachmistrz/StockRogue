@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.http import HttpResponseRedirect, HttpResponseForbidden, HttpResponse, JsonResponse
+from django.http import HttpResponseRedirect, HttpResponseForbidden, HttpResponse, JsonResponse, Http404
 
 from stock_rogue_app.models import Spolka, Player, Actions, Dane
 from django.shortcuts import get_object_or_404, render
@@ -9,7 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from stock_rogue_app.stock_rogue import run_stock_rogue_from_view, compare_from_view, game_from_view
 from stock_rogue_app.forms import DaysStrategyForm, LoginForm, ContactForm, \
-    MoneyOperationForm, ActionOperationForm, CompanyChooseForm
+    MoneyOperationForm, ActionOperationForm, CompanyChooseForm, CompareForm
 from django.views.decorators.http import require_POST
 from django.contrib.auth import authenticate, login, logout
 from django.core.mail import send_mail
@@ -55,21 +55,24 @@ def contactView(request):
 def compareView(request, strategy):
     '''Widok porównania strategii do rzeczywistych notowań'''
 
-    spolka = get_object_or_404(Spolka, skrot="COMARCH")
+    data = {}
+    data['form'] = CompareForm()
 
-    # Placeholder
+    if request.method == 'POST':
+        form = CompareForm(request.POST)
+        if form.is_valid():
+            company = form.cleaned_data['company']
+            startDate = form.cleaned_data['startDate']
+            days = form.cleaned_data['days']
+            strategy = form.cleaned_data['strategy']
 
-    start_data = date(2016, 1, 1)
+            plot_div = compare_from_view(company.skrot,
+                                         startDate,
+                                         days,
+                                         strategy)
 
-    ile_dni = 30
-
-    plot_div = compare_from_view(spolka.skrot,
-                                 start_data,
-                                 ile_dni,
-                                 strategy)
-
-    data = spolka.__dict__
-    data["plot_div"] = plot_div
+            data['skrot'] = company.skrot
+            data["plot_div"] = plot_div
 
     return render(request, "company.html", data)
 
@@ -115,10 +118,10 @@ def gameView(request, date):
 
     company = Spolka.objects.get(skrot='COMARCH')
 
-    data = 0
+    data = Dane.objects.filter(spolka=company, data=today).last()
     while not data:
-        data = Dane.objects.filter(spolka=company, data=date).last()
         today += timedelta(days=1)
+        data = Dane.objects.filter(spolka=company, data=today).last()
         date = datetime.strftime(today, '%Y-%M-%d')
 
     price = data.kurs_biezacy
@@ -157,7 +160,7 @@ def gameView(request, date):
         'money_form': money_form_class(),
         'company_form': company_form_class(),
         'actions_form': action_form_class(),
-        'graph_div': game_from_view("COMARCH", today.date()),
+        'graph_div': game_from_view("COMARCH", tommorow.date()),
         'price' : price,
         'actions': actions,
         'next_day': datetime.strftime(tommorow, '%Y-%M-%d')
