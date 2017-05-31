@@ -32,7 +32,8 @@ footer .glyphicon {
 
 
 .carousel-control {
-    max-height: 500px; !important
+    max-height: 500px;
+}
   
 @media screen and (max-width: 768px) {
     .col-sm-4 {
