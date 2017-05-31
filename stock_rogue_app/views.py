@@ -78,6 +78,28 @@ def strategiesView(request):
     '''Widok strategii'''
     return render(request, "strategies.html")
 
+def doActionOperation(price, type, number, player, company):
+    if (type == 'Kupno'):
+        number = (-1) * number
+
+    new_actions = Actions.objects.get_or_create(owner=player,
+                                                company=company)
+    new_actions.value += number * price
+    new_actions.number += number
+    new_actions.save()
+    if new_actions.number == 0:
+        new_actions.delete()
+    commision = max([3, number * 0.03 * price])
+    player.money += number * price - commision
+    player.save()
+
+def doMoneyOperation(type, value, player):
+    if (type == 'Wypłata'):
+        value = (-1) * value
+        value -= 2  # commision
+    player.money += value
+    player.save()
+
 
 def gameView(request, date):
     '''Widok gry'''
@@ -91,35 +113,24 @@ def gameView(request, date):
     money_form_class = MoneyOperationForm
     action_form_class = ActionOperationForm
     company_form_class = CompanyChooseForm
+
     if request.method == 'POST':
+
         money_form = money_form_class(data=request.POST)
+
         if money_form.is_valid():
             type = request.POST['type']
             value = float(request.POST['value'])
-            if (type == 'Wypłata'):
-                value = (-1) * value
-                value -= 2  # commision
-            player.money += value
-            player.save()
+            doMoneyOperation(type, value, player)
+
         action_form = action_form_class(data=request.POST)
+
         if action_form.is_valid():
             price = request.POST['act_price']
             type = request.POST['act_type']
             number = int(request.POST['act_number'])
+            doActionOperation(price, type, number, player, company)
 
-            if (type == 'Kupno'):
-                number = (-1) * number
-
-            new_actions = Actions.objects.get_or_create(owner=player,
-                                                        company=company)
-            new_actions.value += number * price
-            new_actions.number += number
-            new_actions.save()
-            if new_actions.number == 0:
-                new_actions.delete()
-            commision = max([3, number * 0.03 * price])
-            player.money += number * price - commision
-            player.save()
         HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
     tommorow = datetime.strptime(date, '%Y-%M-%d') + timedelta(days=1)
