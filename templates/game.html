@@ -4,6 +4,7 @@
 
 {% block head %}
     {{ super() }}
+    <script src="/static/plotly-latest.min.js"></script>
     <script type="text/javascript" src="/static/game.js"></script>
 {% endblock %}
 
@@ -66,15 +67,9 @@
 
 
         <div class="col-md-8">
-            <div class="col-md-12">
-                <form role="form" action="" method="post" id="comp_form">
-                    {{ csrf_input }}
-                    {{ company_form.as_p() }}
-                </form>
-                Cena 1 akcji w dniu disiejszym: {{ price }}
-            </div>
-
-            <div id="graph"></div>
+            {{ graph_div|safe}}
+            <p>
+                Cena 1 akcji w dniu disiejszym: {{ price }}</p>
             <div>
                 <div class="col-md-10">
                     <form role="form" action="" method="post">
