@@ -11,12 +11,13 @@ def predict_future_values_for_day(strategy_data, idx, company_data, trends_data)
     result = strategy_data[idx]
 
     if idx == 0:
-        previous_day = company_data[0]
+        previous_day = dict(company_data[0])
     else:
         previous_day = strategy_data[idx - 1]
 
     for name in value_names:
         result[name] = previous_day[name] * trends_data.predict_future_average_name_value(name)
+
     return result
 
 
