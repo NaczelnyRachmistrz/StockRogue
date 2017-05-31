@@ -12,14 +12,21 @@
 {% endblock %}
 {% block content %}
     <div class="container-fluid">
-        <h1 style="margin-top: 70px">Notowania spółki {{ skrot }}</h1>
-
         <nav>
             <a href="{{ url('index') }}">Strona główna</a>
         </nav>
-
+        <h1 style="margin-top: 70px">Notowania spółki {{ skrot }}</h1>
         <main>
-            {{ plot_div|safe}}
+            <section id="form">
+                <form action="#" method="POST">
+                    {{ csrf_input }}
+                    {{ form }}
+                    <input type="submit" value="Wyświetl">
+                </form>
+            </section>
+            <section id="plot">
+                {{ plot_div|safe}}
+            </section>
         </main>
     </div>
 {% endblock %}

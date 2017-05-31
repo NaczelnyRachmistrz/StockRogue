@@ -7,16 +7,18 @@ from django.forms import SelectDateWidget
 
 from stock_rogue_app.models import Spolka
 
+STRATEGY_CHOICES = (('A', 'Main'), ('B', 'Naive'), ('C', 'Stable'), ('D', 'Average'),
+               ('E', 'Linear Regression'), ('F', 'Polynomial Regression'),
+               ('G', 'Huber Regression'))
+
 
 class DaysStrategyForm(forms.Form):
     '''Formularz do wyboru strategii i liczby dni, na jakie przewidujemy.'''
 
-    CHOICES = (('A', 'Main'), ('B', 'Naive'), ('C', 'Stable'), ('D', 'Average'),
-               ('E', 'Linear Regression'), ('F', 'Polynomial Regression'),
-               ('G', 'Huber Regression'))
+
 
     strategia = forms.ChoiceField(label='Strategia:',
-                                  choices=CHOICES,
+                                  choices=STRATEGY_CHOICES,
                                   required=True)
     ile_dni = forms.IntegerField(label='Liczba dni:',
                                  min_value=0,
@@ -87,3 +89,19 @@ class CompanyChooseForm(forms.Form):
                                      queryset=Spolka.objects
                                      .filter(typ='SP')
                                      .order_by('skrot'))
+
+class CompareForm(forms.Form):
+    company = forms.ModelChoiceField(label='Spółka',
+                                     queryset=Spolka.objects
+                                     .filter(typ='SP')
+                                     .order_by('skrot'))
+
+    YEAR_CHOICES = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017]
+    startDate = forms.DateField(label='Początkowa data',
+                                widget=SelectDateWidget(years=YEAR_CHOICES))
+
+    days = forms.IntegerField(label='Liczba dni', min_value=True)
+    strategy = forms.ChoiceField(label='Strategia:',
+                                  choices=STRATEGY_CHOICES,
+                                  required=True)
+
