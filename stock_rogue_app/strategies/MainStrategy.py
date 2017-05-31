@@ -17,6 +17,11 @@ def predict_future_values_for_day(strategy_data, idx, company_data, trends_data)
 
     for name in value_names:
         result[name] = previous_day[name] * trends_data.predict_future_average_name_value(name)
+
+    if result['kurs_min'] > result['kurs_max']:
+        result['kurs_min'] = result['kurs_max']
+        result['kurs_biezacy'] = result['kurs_min']
+
     return result
 
 
