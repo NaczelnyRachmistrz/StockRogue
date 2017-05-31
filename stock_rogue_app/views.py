@@ -160,7 +160,7 @@ def gameView(request, date):
         'money_form': money_form_class(),
         'company_form': company_form_class(),
         'actions_form': action_form_class(),
-        'graph_div': game_from_view("COMARCH", today.date()),
+        'graph_div': game_from_view("COMARCH", tommorow.date()),
         'price' : price,
         'actions': actions,
         'next_day': datetime.strftime(tommorow, '%Y-%M-%d')
